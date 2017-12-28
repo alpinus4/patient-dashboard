@@ -1,1 +1,2 @@
-# patient-dashboard
+# Patient dashboard
+Designed by @shauryanathan
