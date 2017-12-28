@@ -1,0 +1,68 @@
+#mainContainer {
+  margin-top: 15px;
+  height: calc(100% - 40px);
+  box-shadow: 3px 10px 20px -3px rgba(97, 97, 97, 0.5);
+  background-color: #F1F0F1;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background-color: white;
+}
+
+.orange-background {
+  background-color: #F79610;
+}
+
+#topBar {
+  height: 11vh;
+  width: auto;
+}
+
+#leftBar {
+  width: 13.5vw;
+  margin-left: 15px;
+  /*height: 85.2vh;
+  float: left;*/
+}
+
+#logo {
+  width: 13.5vw;
+  height: auto;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 1vh;
+  margin-top: 2vh;
+}
+
+#logoContainer {
+  background-color: #D07A2E;
+  height: 11vh;
+  width: 13.5vw;
+  float: left;
+}
+
+#avatar {
+  border-radius: 50%;
+  width: 8vw;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+#searchBar {
+  height: 10vh;
+  /*width: 90%;
+  position: relative;
+	left: 26vh;
+  border: none;
+  */
+  margin: 15px 90px 15px 75px;
+  box-shadow: 3px 10px 20px -3px rgba(97, 97, 97, 0.5);
+}
+
+#content {
+  width: auto;
+  margin: 2vh 8vw 1vh 2vw;
+}
