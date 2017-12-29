@@ -1,14 +1,21 @@
+html, body {
+  height: 150%;
+  background-color: rgb(255, 255, 255);
+}
+
+@media (min-width: 992px) {
+  html, body {
+    overflow: hidden;
+    height: 100%;
+  }
+}
+
 #mainContainer {
   margin-top: 15px;
+  margin-bottom: 40px;
   height: calc(100% - 40px);
   box-shadow: 3px 10px 20px -3px rgba(97, 97, 97, 0.5);
   background-color: #F1F0F1;
-}
-
-html, body {
-  height: 100%;
-  overflow: hidden;
-  background-color: white;
 }
 
 .orange-background {
@@ -23,8 +30,9 @@ html, body {
 #leftBar {
   width: 13.5vw;
   margin-left: 15px;
-  /*height: 85.2vh;
-  float: left;*/
+  float: left;
+  margin: auto;
+  height: calc(100% - 11vh);
 }
 
 #logo {
@@ -51,18 +59,64 @@ html, body {
   margin: auto;
 }
 
+#contentContainer {
+  width: calc(100vw - 13.5vw - 1.6vw);
+  height: calc(100vh - 11vh - 55px);
+  margin-bottom: calc(11vh + 55px);
+  margin-left: 13.5vw;
+}
+
+/* COMPONENTS */
+
 #searchBar {
   height: 10vh;
-  /*width: 90%;
-  position: relative;
-	left: 26vh;
   border: none;
-  */
   margin: 15px 90px 15px 75px;
   box-shadow: 3px 10px 20px -3px rgba(97, 97, 97, 0.5);
 }
 
-#content {
-  width: auto;
-  margin: 2vh 8vw 1vh 2vw;
+#activeLists, #observationCharts, #medications, #enrolledPrograms, #nextAppointments {
+  border: none;
+  box-shadow: 0px 3px 3px 1px rgba(153, 153, 153, 0.5);
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+#activeLists h1, #observationCharts h1, #medications h1, #enrolledPrograms h1, #nextAppointments h1 {
+  font-size: 3.5vmin;
+  font-family: 'Roboto', sans-serif;
+}
+
+#activeLists {
+  height: 39vh;
+  margin-left: 75px;
+  text-indent: 6%
+}
+
+#observationCharts {
+  height: 40vh;
+  margin-left: 75px;
+  width: 43.5vw;
+  font-size: 4.5vmin;
+}
+
+#observationCharts h1 {
+  font-size: 4vmin;
+  text-indent: 7%
+}
+
+#medications {
+  height: 25vh;
+  margin-left: 75px;
+  text-align: center;
+}
+
+#enrolledPrograms {
+  height: 25vh;
+  margin-left: 75px;
+}
+
+#nextAppointments {
+  height: 25vh;
+  margin-left: 15px;
 }
