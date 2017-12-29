@@ -6,27 +6,52 @@
   <template>
 
     <style>
-      /* shadow DOM styles go here */
+
       :host {
-        display: inline-block;
+        width: 100%;
+        color: var(--patient-demographics-font-color , rgb(255, 255, 255));
       }
 
-      :host #patient_demographics{
-        width: 100%;
-        font-size: var(--patient-demographics-font-size , 25pt);
-        color: var(--patient-demographics-font-color , rgb(255, 255, 255));
-        padding: 20px;
+      :host #content {
+        padding: 10px;
+      }
 
+      :host #name {
+        text-align: center;
+        font-size: var(--patient-demographics-font-size-name , 32pt);
+      }
+
+      :host #maleAge {
+        font-size: var(--patient-demographics-font-size-male-age , 24pt);
+        margin-left: 15px;
+      }
+
+      :host #birthdate {
+        font-size: var(--patient-demographics-font-size-birthdate , 24pt);
+      }
+
+      :host #birthdateTitle {
+        font-weight: 900;
+        font-size: var(--patient-demographics-font-size-birthdate-title , 24pt);
       }
 
     </style>
 
 
-    <!-- shadow DOM goes here -->
-  <div id="patient_demographics">
-        {{patient.person.preferredName.givenName}}&nbsp;{{patient.person.preferredName.middleName}}&nbsp;{{patient.person.preferredName.familyName}}
+  <div id=content>
+    <div id="name">
+      {{patient.person.preferredName.givenName}} {{patient.person.preferredName.middleName}} {{patient.person.preferredName.familyName}}
+    </div>
+  </br>
+    <div id="maleAge">
+      {{patient.person.gender}}, {{patient.person.age}}
+    </div>
+  </br>
+    <div id="birthdate">
+      <div id="birthdateTitle">Date of birth:</div>
+      {{patient.person.birthdate}}
+    </div>
   </div>
-
   <iron-ajax
   url="{{url}}"
   params='{"v":"full"}'
@@ -44,7 +69,7 @@
   <script>
     class PatientDemographics extends Polymer.Element {
       static get is() {
-          return 'patient-demographics';
+        return 'patient-demographics';
       }
       static get properties() {
         return {
@@ -64,7 +89,7 @@
         super();
       }
 
-      handleResponse(data){
+      handleResponse(data) {
         var tmp_patient;
         tmp_patient = data.detail.response;
 
@@ -74,7 +99,7 @@
         this.patient = tmp_patient;
       }
 
-      _error(event){
+      _error(event) {
         console.log(event);
         console.log(event.detail);
         console.log(event.detail.error);
@@ -84,7 +109,7 @@
         console.log(event.detail.request.response);
       }
 
-      _changedUUID(){
+      _changedUUID() {
         this.url = "http://localhost:8080/lh-toolkit/ws/rest/v1/patient/" + this.uuid;
         this.$.iron_ajax.generateRequest();
       }
@@ -94,37 +119,34 @@
   </script>
 
   <script>
-
-    function _correctDead(dead){
-      if(dead == false){
+    function _correctDead(dead) {
+      if (dead == false) {
         return "Alive";
-      }else{
+      } else {
         return "Dead";
       }
     }
 
-    function _correctGender(gender){
-      if(gender == "M"){
+    function _correctGender(gender) {
+      if (gender == "M") {
         return "Male";
-      }else if(gender == "F"){
+      } else if (gender == "F") {
         return "Female";
       }
     }
 
-    function _parseDate(givenDate){
+    function _parseDate(givenDate) {
       var date = new Date(givenDate);
 
       //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date
       var myDateString;
-      date.setDate(date.getDate()+0);
-      myDateString = ('0' + date.getDate()).slice(-2) + '/'
-           + ('0' + (date.getMonth()+1)).slice(-2) + '/'
-           + date.getFullYear();
+      date.setDate(date.getDate() + 0);
+      myDateString = ('0' + date.getDate()).slice(-2) + '/' +
+        ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+        date.getFullYear();
 
       return myDateString;
     }
-
-
   </script>
 
 </dom-module>
