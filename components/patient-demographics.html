@@ -1,0 +1,130 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="https://polygit.org/polymer+v2.0.0/shadycss+webcomponents+1.0.0/components/iron-ajax/iron-ajax.html">
+
+<dom-module id="patient-demographics">
+
+  <template>
+
+    <style>
+      /* shadow DOM styles go here */
+      :host {
+        display: inline-block;
+      }
+
+      :host #patient_demographics{
+        width: 100%;
+        font-size: var(--patient-demographics-font-size , 25pt);
+        color: var(--patient-demographics-font-color , rgb(255, 255, 255));
+        padding: 20px;
+
+      }
+
+    </style>
+
+
+    <!-- shadow DOM goes here -->
+  <div id="patient_demographics">
+        {{patient.person.preferredName.givenName}}&nbsp;{{patient.person.preferredName.middleName}}&nbsp;{{patient.person.preferredName.familyName}}
+  </div>
+
+  <iron-ajax
+  url="{{url}}"
+  params='{"v":"full"}'
+  content-type="application/json"
+  handle-as="json"
+  with-credentials="true"
+  on-response="handleResponse"
+  method="GET"
+  on-error="_error"
+  id="iron_ajax"></iron-ajax>
+
+
+  </template>
+
+  <script>
+    class PatientDemographics extends Polymer.Element {
+      static get is() {
+          return 'patient-demographics';
+      }
+      static get properties() {
+        return {
+          patient: {
+            type: Object
+          },
+          uuid: {
+            type: String,
+            observer: "_changedUUID"
+          },
+          url: {
+            type: String
+          }
+        }
+      }
+      constructor() {
+        super();
+      }
+
+      handleResponse(data){
+        var tmp_patient;
+        tmp_patient = data.detail.response;
+
+        tmp_patient.person.dead = _correctDead(tmp_patient.person.dead);
+        tmp_patient.person.birthdate = _parseDate(tmp_patient.person.birthdate);
+        tmp_patient.person.gender = _correctGender(tmp_patient.person.gender);
+        this.patient = tmp_patient;
+      }
+
+      _error(event){
+        console.log(event);
+        console.log(event.detail);
+        console.log(event.detail.error);
+        console.log(event.detail.error.message);
+        console.log(event.detail.request);
+        console.log(event.detail.response);
+        console.log(event.detail.request.response);
+      }
+
+      _changedUUID(){
+        this.url = "http://localhost:8080/lh-toolkit/ws/rest/v1/patient/" + this.uuid;
+        this.$.iron_ajax.generateRequest();
+      }
+
+    }
+    customElements.define(PatientDemographics.is, PatientDemographics);
+  </script>
+
+  <script>
+
+    function _correctDead(dead){
+      if(dead == false){
+        return "Alive";
+      }else{
+        return "Dead";
+      }
+    }
+
+    function _correctGender(gender){
+      if(gender == "M"){
+        return "Male";
+      }else if(gender == "F"){
+        return "Female";
+      }
+    }
+
+    function _parseDate(givenDate){
+      var date = new Date(givenDate);
+
+      //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date
+      var myDateString;
+      date.setDate(date.getDate()+0);
+      myDateString = ('0' + date.getDate()).slice(-2) + '/'
+           + ('0' + (date.getMonth()+1)).slice(-2) + '/'
+           + date.getFullYear();
+
+      return myDateString;
+    }
+
+
+  </script>
+
+</dom-module>
