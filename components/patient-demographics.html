@@ -40,28 +40,21 @@
 
   <div id=content>
     <div id="name">
-      {{patient.person.preferredName.givenName}} {{patient.person.preferredName.middleName}} {{patient.person.preferredName.familyName}}
-    </div>
-  </br>
-    <div id="maleAge">
-      {{patient.person.gender}}, {{patient.person.age}}
-    </div>
-  </br>
-    <div id="birthdate">
-      <div id="birthdateTitle">Date of birth:</div>
-      {{patient.person.birthdate}}
-    </div>
+      <template is="dom-repeat" items="[[patient.name.0.given]]">
+        {{item}}
+      </template> {{patient.name.0.family}}
   </div>
-  <iron-ajax
-  url="{{url}}"
-  params='{"v":"full"}'
-  content-type="application/json"
-  handle-as="json"
-  with-credentials="true"
-  on-response="handleResponse"
-  method="GET"
-  on-error="_error"
-  id="iron_ajax"></iron-ajax>
+  </br>
+  <div id="maleAge">
+    {{patient.gender}}, {{age}}
+  </div>
+  </br>
+  <div id="birthdate">
+    <div id="birthdateTitle">Date of birth:</div>
+    {{patient.birthDate}}
+  </div>
+  </div>
+  <iron-ajax url="{{url}}" params='{"_format":"application/fhir+json"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
 
 
   </template>
@@ -82,6 +75,9 @@
           },
           url: {
             type: String
+          },
+          age: {
+            type: Number
           }
         }
       }
@@ -90,13 +86,11 @@
       }
 
       handleResponse(data) {
-        var tmp_patient;
-        tmp_patient = data.detail.response;
-
-        tmp_patient.person.dead = _correctDead(tmp_patient.person.dead);
-        tmp_patient.person.birthdate = _parseDate(tmp_patient.person.birthdate);
-        tmp_patient.person.gender = _correctGender(tmp_patient.person.gender);
-        this.patient = tmp_patient;
+        var tmp_patient = data.detail.response;
+        console.log(tmp_patient);
+        tmp_patient.gender = __capitalizeFirstLetter(tmp_patient.gender);
+        this.patient = tmp_patient
+        this.age = __getAge(this.patient.birthDate);
       }
 
       _error(event) {
@@ -110,7 +104,7 @@
       }
 
       _changedUUID() {
-        this.url = "http://localhost:8080/lh-toolkit/ws/rest/v1/patient/" + this.uuid;
+        this.url = "http://test.fhir.org/r3/Patient/" + this.uuid;
         this.$.iron_ajax.generateRequest();
       }
 
@@ -119,33 +113,13 @@
   </script>
 
   <script>
-    function _correctDead(dead) {
-      if (dead == false) {
-        return "Alive";
-      } else {
-        return "Dead";
-      }
+    function __getAge(birthdate) {
+      return 21;
     }
 
-    function _correctGender(gender) {
-      if (gender == "M") {
-        return "Male";
-      } else if (gender == "F") {
-        return "Female";
-      }
-    }
-
-    function _parseDate(givenDate) {
-      var date = new Date(givenDate);
-
-      //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date
-      var myDateString;
-      date.setDate(date.getDate() + 0);
-      myDateString = ('0' + date.getDate()).slice(-2) + '/' +
-        ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
-        date.getFullYear();
-
-      return myDateString;
+    //part of code from https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+    function __capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   </script>
 
