@@ -54,7 +54,15 @@
     {{patient.birthDate}}
   </div>
   </div>
-  <iron-ajax url="{{url}}" params='{"_format":"application/fhir+json"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
+
+  <iron-ajax url="{{url}}"
+  params='{"_format":"application/fhir+json", "v":"full"}'
+  content-type="application/json"
+  handle-as="json"
+  on-response="handleResponse"
+  method="GET"
+  on-error="_error"
+  id="iron_ajax"></iron-ajax>
 
 
   </template>
@@ -90,7 +98,7 @@
         console.log(tmp_patient);
         tmp_patient.gender = __capitalizeFirstLetter(tmp_patient.gender);
         this.patient = tmp_patient
-        this.age = __getAge(this.patient.birthDate);
+        this.age = __calculateAge(this.patient.birthDate);
       }
 
       _error(event) {
@@ -113,8 +121,13 @@
   </script>
 
   <script>
-    function __getAge(birthdate) {
-      return 21;
+
+  //part of code from https://stackoverflow.com/questions/4060004/calculate-age-given-the-birth-date-in-the-format-yyyymmdd
+    function __calculateAge(givenBirthdate) {
+      birthdate = new Date(givenBirthdate);
+      var ageDifMs = Date.now() - birthdate.getTime();
+      var ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
 
     //part of code from https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
