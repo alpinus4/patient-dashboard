@@ -88,7 +88,7 @@ html, body {
 #activeLists {
   height: 39vh;
   margin-left: 75px;
-  text-indent: 6%
+  overflow: auto;
 }
 
 #observationCharts {
@@ -119,10 +119,31 @@ html, body {
   margin-left: 15px;
 }
 
+#problems h1, #lastVisits h1 {
+  font-size: 3vmin;
+}
+
+#problems {
+  float: left;
+  width: 35%;
+}
+
+#lastVisits{
+    float: right;
+    width: 60%;
+}
+
 /* COMPONENTS */
 
 #patientDemographicsComponent {
   font-family: 'Roboto', sans-serif;
   font-size: 25pt;
   --patient-demographics-font-color: rgb(255, 255, 255);
+}
+
+#lastVisitsComponent {
+  font-family: 'Roboto', sans-serif;
+  --last-visits-encounters-display: block;
+  --last-visits-encounters-font-size: 1.5vmin;
+  --last-visits-encounters-font-size-datetime: 1vmin;
 }

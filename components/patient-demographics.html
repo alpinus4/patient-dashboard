@@ -56,13 +56,13 @@
   </div>
 
   <iron-ajax url="{{url}}"
-  params='{"_format":"application/fhir+json", "v":"full"}'
+  headers='{"Accept": "application/json+fhir"}'
   content-type="application/json"
   handle-as="json"
   on-response="handleResponse"
   method="GET"
   on-error="_error"
-  id="iron_ajax"></iron-ajax>
+  id="iron_ajax"/>
 
 
   </template>
@@ -95,7 +95,6 @@
 
       handleResponse(data) {
         var tmp_patient = data.detail.response;
-        console.log(tmp_patient);
         tmp_patient.gender = __capitalizeFirstLetter(tmp_patient.gender);
         this.patient = tmp_patient
         this.age = __calculateAge(this.patient.birthDate);
@@ -112,7 +111,7 @@
       }
 
       _changedUUID() {
-        this.url = "http://test.fhir.org/r3/Patient/" + this.uuid;
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/" + this.uuid;
         this.$.iron_ajax.generateRequest();
       }
 

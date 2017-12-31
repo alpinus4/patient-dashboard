@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
   <link rel="import" href="./components/patient-demographics.html">
+  <link rel="import" href="./components/last-visits.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,14 +33,23 @@
       <img src="./images/pixel_avatar.png" id="avatar">
       <!-- Patient image component to do -->
       </br>
-      <patient-demographics uuid="319" id="patientDemographicsComponent"></patient-demographics>
+      <patient-demographics uuid="4342010" id="patientDemographicsComponent"/>
     </div>
 
     <div id="contentContainer" class="container">
       <div id="searchBar" class="panel panel-default"></div>
         <div class="row">
           <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="activeLists">
-            <h1>Active Lists</h1></div>
+            <h1>Active Lists</h1>
+            <div id="problems">
+              <h1>Problems</h1>
+              
+            </div>
+            <div id="lastVisits">
+              <h1>Last five visits</h1>
+              <last-visits patientid="4342010" id="lastVisitsComponent"/>
+            </div>
+          </div>
           <div class="col-lg-6 col-sm-6 col-xs-6 panel panel-default" id="observationCharts">
             <h1>Observation Charts</h1></div>
           <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="medications">
