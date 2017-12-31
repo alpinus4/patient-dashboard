@@ -14,6 +14,7 @@
 
   <link rel="import" href="./components/patient-demographics.html">
   <link rel="import" href="./components/last-visits.html">
+  <link rel="import" href="./components/patient-medications.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -43,17 +44,23 @@
             <h1>Active Lists</h1>
             <div id="problems">
               <h1>Problems</h1>
-              
+
             </div>
             <div id="lastVisits">
               <h1>Last five visits</h1>
-              <last-visits patientid="4342010" id="lastVisitsComponent"/>
+              <div  class="label-orange">
+                <last-visits patientid="4342010" id="lastVisitsComponent"/>
+              </div>
             </div>
           </div>
           <div class="col-lg-6 col-sm-6 col-xs-6 panel panel-default" id="observationCharts">
             <h1>Observation Charts</h1></div>
           <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="medications">
-            <h1>Medications</h1></div>
+            <h1>Medications</h1>
+            <div  class="label-orange">
+              <patient-medications patientid="4342010" id="patientMedicationsComponent"/>
+            </div>
+          </div>
           <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="enrolledPrograms">
             <h1>Enrolled Programs</h1></div>
           <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="nextAppointments">

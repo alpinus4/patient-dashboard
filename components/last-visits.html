@@ -10,6 +10,7 @@
         font-size: var(--last-visits-encounters-font-size , 20pt);
         color: var(--last-visits-encounters-font-color , rgb(24, 24, 24));
         background-color: var(--last-visits-encounters-background-color , inherit);
+        padding: var(--last-visits-encounters-padding , 10px);
 
       }
 
@@ -137,18 +138,6 @@
   </script>
 
   <script>
-    function filterEncounters(encounters, patientid) {
-
-      var tmp_encounters = [];
-
-      for (var i = 0; i < encounters.length; i++) {
-        if (encounters[i].resource.id == patientid) {
-          tmp_encounters.push(encounters[i]);
-        }
-      }
-      return tmp_encounters;
-    }
-
     function parseDate(givenDate) {
       var date = new Date(givenDate);
 
@@ -162,11 +151,6 @@
         ('0' + date.getMinutes()).slice(-2);
 
       return myDateString;
-    }
-
-    //part of code from https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
-    function capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   </script>
 

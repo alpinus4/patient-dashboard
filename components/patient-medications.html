@@ -1,0 +1,128 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="patient-medications">
+
+  <template>
+
+    <style>
+      /* shadow DOM styles go here */
+      :host #content{
+        font-size: var(--patient-medication-font-size , 20pt);
+        color: var(--patient-medication-font-color , rgb(24, 24, 24));
+        background-color: var(--patient-medication-background-color , inherit);
+        padding: var(--patient-medication-padding , 10px);
+      }
+
+      :host .index{
+        font-size: var(--patient-medication-font-size-index , inherit);
+        color: var(--patient-medication-font-color-index , inherit);
+      }
+
+      :host .medication{
+        font-size: var(--patient-medication-font-size-medication , inherit);
+        color: var(--patient-medication-font-color-medication , inherit);
+      }
+
+      :host .dosageInstruction{
+        font-size: var(--patient-medication-font-size-dosage-instruction , inherit);
+        color: var(--patient-medication-font-color-dosage-instruction , inherit);
+      }
+
+    </style>
+
+
+    <!-- shadow DOM goes here -->
+    <div id="content">
+      <template is="dom-repeat" items="[[toShow]]">
+        <p>
+            <span class="index"><b>{{displayIndex(index)}}.</b></span>
+            <span class="medication">{{item.resource.medicationCodeableConcept.coding.0.display}}</br></span>
+            <span class="dosageInstruction">{{item.resource.dosageInstruction.0._text.extension.0.valueString}}</br></span>
+        </p>
+      </template>
+    </div>
+
+    <iron-ajax
+    url="{{url}}"
+    headers='{"Accept": "application/json+fhir"}'
+    content-type="application/json"
+    handle-as="json"
+    on-response="handleResponse"
+    method="GET"
+    on-error="_error"
+    id="iron_ajax"/>
+
+  </template>
+
+  <script>
+    class PatientMedications extends Polymer.Element {
+      static get is() {
+        return 'patient-medications';
+      }
+      static get properties() {
+        return {
+          toShow: {
+            type: Array
+          },
+          patientid: {
+            type: String,
+            observer: "_changedPatientID"
+          },
+          url: {
+            type: String
+          }
+        }
+      }
+
+      constructor() {
+        super();
+      }
+
+
+      handleResponse(data) {
+        this.toShow = data.detail.response.entry;
+      }
+
+      _changedPatientID(){
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/MedicationOrder?patient=" + this.patientid;
+        this.$.iron_ajax.generateRequest();
+      }
+
+      displayIndex(index) {
+        return index + 1;
+      }
+
+      _error(event) {
+        console.log(event);
+        console.log(event.detail);
+        console.log(event.detail.error);
+        console.log(event.detail.error.message);
+        console.log(event.detail.request);
+        console.log(event.detail.response);
+        console.log(event.detail.request.response);
+      }
+
+    }
+    customElements.define(PatientMedications.is, PatientMedications);
+  </script>
+
+  <script>
+
+    function parseDate(givenDate) {
+      var date = new Date(givenDate);
+
+      //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date with added hours and minutes
+      var myDateString;
+      date.setDate(date.getDate() + 0);
+      myDateString = ('0' + date.getDate()).slice(-2) + '/' +
+        ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+        date.getFullYear() + '  ' +
+        ('0' + (date.getHours() - 1)).slice(-2) + ':' +
+        ('0' + date.getMinutes()).slice(-2);
+
+      return myDateString;
+    }
+
+  </script>
+
+</dom-module>
