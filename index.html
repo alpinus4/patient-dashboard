@@ -16,6 +16,7 @@
   <link rel="import" href="./components/last-visits.html">
   <link rel="import" href="./components/patient-medications.html">
   <link rel="import" href="./components/observation-charts.html">
+  <link rel="import" href="./components/next-appointments.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -56,7 +57,7 @@
           </div>
           <div class="col-lg-6 col-sm-6 col-xs-6 panel panel-default" id="observationCharts">
             <h1>Observation Charts</h1>
-            <observation-charts patientid="4342010"/>
+            <observation-charts patientid="4342010" id="observationChartsComponent"/>
           </div>
           <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="medications">
             <h1>Medications</h1>
@@ -67,7 +68,9 @@
           <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="enrolledPrograms">
             <h1>Enrolled Programs</h1></div>
           <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="nextAppointments">
-            <h1>Next Appointments</h1></div>
+            <h1>Next Appointments</h1>
+            <next-appointments patientid="4342010" id="nextAppointmentsComponent"/>
+          </div>
         </div>
 
 

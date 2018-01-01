@@ -1,0 +1,147 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="next-appointments">
+
+  <template>
+
+    <style>
+      /* shadow DOM styles go here */
+      :host #content{
+        font-size: var(--next-appointments-font-size , 20pt);
+        color: var(--next-appointments-font-color , rgb(24, 24, 24));
+        background-color: var(--next-appointments-background-color , inherit);
+        padding: var(--next-appointments-padding , 10px);
+      }
+
+      :host .index{
+        font-size: var(--next-appointments-font-size-index , inherit);
+        color: var(--next-appointments-font-color-index , inherit);
+      }
+
+      :host .type{
+        font-size: var(--next-appointments-font-size-type , inherit);
+        color: var(--next-appointments-font-color-type , inherit);
+      }
+
+      :host .status{
+        font-size: var(--next-appointments-font-size-status , inherit);
+        color: var(--next-appointments-font-color-status , inherit);
+      }
+
+      :host .datetime{
+        font-size: var(--next-appointments-font-size-datetime , 15pt);
+        color: var(--next-appointments-font-color-datetime , rgb(88, 88, 88));
+        display: var(--next-appointments-display-datetime , inherit);
+      }
+
+      :host .duration{
+        font-size: var(--next-appointments-font-size-duration , inherit);
+        color: var(--next-appointments-font-color-duration , inherit);
+      }
+
+    </style>
+
+
+    <!-- shadow DOM goes here -->
+    <div id="content">
+      <template is="dom-repeat" items="[[toShow]]">
+        <p>
+            <span class="index"><b>{{displayIndex(index)}}.</b></span>
+            <span class="type">{{item.resource.type.coding.0.display}}</br></span>
+            <span class="status">Status: {{item.resource.status}}</br></span>
+            <span class="datetime">From {{item.resource.start}} until {{item.resource.end}}</br></span>
+            <span class="duration">Duration: {{item.resource.minutesDuration}} min</br></span>
+
+        </p>
+      </template>
+    </div>
+
+    <iron-ajax
+    url="{{url}}"
+    headers='{"Accept": "application/json+fhir"}'
+    content-type="application/json"
+    handle-as="json"
+    on-response="handleResponse"
+    method="GET"
+    on-error="_error"
+    id="iron_ajax"/>
+
+  </template>
+
+  <script>
+    class NextAppointments extends Polymer.Element {
+      static get is() {
+        return 'next-appointments';
+      }
+      static get properties() {
+        return {
+          toShow: {
+            type: Array
+          },
+          patientid: {
+            type: String,
+            observer: "_changedPatientID"
+          },
+          url: {
+            type: String
+          }
+        }
+      }
+
+      constructor() {
+        super();
+      }
+
+
+      handleResponse(data) {
+        var nextAppointments = data.detail.response.entry;
+
+        //parse dates
+        for (var i = 0; i < nextAppointments.length; i++) {
+          nextAppointments[i].resource.start = parseDateAppointment(nextAppointments[i].resource.start);
+          nextAppointments[i].resource.end = parseDateAppointment(nextAppointments[i].resource.end);
+        }
+        this.toShow = nextAppointments;
+      }
+
+      _changedPatientID(){
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
+        this.$.iron_ajax.generateRequest();
+      }
+
+      displayIndex(index) {
+        return index + 1;
+      }
+
+      _error(event) {
+        console.log(event);
+        console.log(event.detail);
+        console.log(event.detail.error);
+        console.log(event.detail.error.message);
+        console.log(event.detail.request);
+        console.log(event.detail.response);
+        console.log(event.detail.request.response);
+      }
+
+    }
+    customElements.define(NextAppointments.is, NextAppointments);
+  </script>
+
+  <script>
+    function parseDateAppointment(givenDate) {
+      var date = new Date(givenDate);
+
+      //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date with added hours and minutes
+      var myDateString;
+      date.setDate(date.getDate() + 0);
+      myDateString = ('0' + date.getDate()).slice(-2) + '/' +
+        ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+        date.getFullYear() + '  ' +
+        ('0' + (date.getHours() - 1)).slice(-2) + ':' +
+        ('0' + date.getMinutes()).slice(-2);
+
+      return myDateString;
+    }
+  </script>
+
+</dom-module>
