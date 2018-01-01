@@ -1,0 +1,121 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="observation-charts">
+
+  <template>
+
+    <style>
+      /* shadow DOM styles go here */
+      :host #content{
+        font-size: var(--observation-charts-font-size , 20pt);
+        color: var(--observation-charts-font-color , rgb(24, 24, 24));
+        background-color: var(--observation-charts-background-color , inherit);
+        padding: var(--observation-charts-padding , 10px);
+      }
+
+      :host .index{
+        font-size: var(--observation-charts-font-size-index , inherit);
+        color: var(--observation-charts-font-color-index , inherit);
+      }
+
+      :host .type{
+        font-size: var(--observation-charts-font-size-type , inherit);
+        color: var(--observation-charts-font-color-type , inherit);
+      }
+
+      :host .status{
+        font-size: var(--observation-charts-font-size-status , inherit);
+        color: var(--observation-charts-font-color-status , inherit);
+      }
+
+      :host .valueCodeableConcept{
+        font-size: var(--observation-charts-font-size-concept , inherit);
+        color: var(--observation-charts-font-color-concept , inherit);
+      }
+
+      :host .codeText{
+        font-size: var(--observation-charts-font-size-code , inherit);
+        color: var(--observation-charts-font-color-code , inherit);
+      }
+
+    </style>
+
+
+    <!-- shadow DOM goes here -->
+    <div id="content">
+      <template is="dom-repeat" items="[[toShow]]">
+        <p>
+            <span class="index"><b>{{displayIndex(index)}}.</b></span>
+            <span class="type">{{item.resource.category.text}} - <span class="codeText">{{item.resource.code.text}}</span></br></span>
+            <span class="status">Status: {{item.resource.status}}</br></span>
+            <span class="valueCodeableConcept">{{item.resource.valueCodeableConcept.text}}</br></span>
+
+        </p>
+      </template>
+    </div>
+
+    <iron-ajax
+    url="{{url}}"
+    headers='{"Accept": "application/json+fhir"}'
+    content-type="application/json"
+    handle-as="json"
+    on-response="handleResponse"
+    method="GET"
+    on-error="_error"
+    id="iron_ajax"/>
+
+  </template>
+
+  <script>
+    class ObservationCharts extends Polymer.Element {
+      static get is() {
+        return 'observation-charts';
+      }
+      static get properties() {
+        return {
+          toShow: {
+            type: Array
+          },
+          patientid: {
+            type: String,
+            observer: "_changedPatientID"
+          },
+          url: {
+            type: String
+          }
+        }
+      }
+
+      constructor() {
+        super();
+      }
+
+
+      handleResponse(data) {
+        this.toShow = data.detail.response.entry;
+      }
+
+      _changedPatientID(){
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Observation?patient=" + this.patientid;
+        this.$.iron_ajax.generateRequest();
+      }
+
+      displayIndex(index) {
+        return index + 1;
+      }
+
+      _error(event) {
+        console.log(event);
+        console.log(event.detail);
+        console.log(event.detail.error);
+        console.log(event.detail.error.message);
+        console.log(event.detail.request);
+        console.log(event.detail.response);
+        console.log(event.detail.request.response);
+      }
+
+    }
+    customElements.define(ObservationCharts.is, ObservationCharts);
+  </script>
+
+</dom-module>
