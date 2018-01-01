@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<script type="text/javascript" src="../caleandar-jujumuncher/js/caleandar.min.js"></script>
+<link rel="stylesheet" href="../caleandar-jujumuncher/css/theme2.css" />
 
 <dom-module id="next-appointments">
 
@@ -7,7 +9,7 @@
     <style>
       /* shadow DOM styles go here */
       :host #content{
-        font-size: var(--next-appointments-font-size , 20pt);
+        font-size: var(--next-appointments-font-size , 10pt);
         color: var(--next-appointments-font-color , rgb(24, 24, 24));
         background-color: var(--next-appointments-background-color , inherit);
         padding: var(--next-appointments-padding , 10px);
@@ -44,27 +46,10 @@
 
     <!-- shadow DOM goes here -->
     <div id="content">
-      <template is="dom-repeat" items="[[toShow]]">
-        <p>
-            <span class="index"><b>{{displayIndex(index)}}.</b></span>
-            <span class="type">{{item.resource.type.coding.0.display}}</br></span>
-            <span class="status">Status: {{item.resource.status}}</br></span>
-            <span class="datetime">From {{item.resource.start}} until {{item.resource.end}}</br></span>
-            <span class="duration">Duration: {{item.resource.minutesDuration}} min</br></span>
-
-        </p>
-      </template>
+      <div id="caleandar"/>
     </div>
 
-    <iron-ajax
-    url="{{url}}"
-    headers='{"Accept": "application/json+fhir"}'
-    content-type="application/json"
-    handle-as="json"
-    on-response="handleResponse"
-    method="GET"
-    on-error="_error"
-    id="iron_ajax"/>
+  <iron-ajax url="{{url}}" headers='{"Accept": "application/json+fhir"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax" />
 
   </template>
 
@@ -95,16 +80,10 @@
 
       handleResponse(data) {
         var nextAppointments = data.detail.response.entry;
-
-        //parse dates
-        for (var i = 0; i < nextAppointments.length; i++) {
-          nextAppointments[i].resource.start = parseDateAppointment(nextAppointments[i].resource.start);
-          nextAppointments[i].resource.end = parseDateAppointment(nextAppointments[i].resource.end);
-        }
-        this.toShow = nextAppointments;
+        runCalendar(this.$.caleandar, nextAppointments);
       }
 
-      _changedPatientID(){
+      _changedPatientID() {
         this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
@@ -128,19 +107,26 @@
   </script>
 
   <script>
-    function parseDateAppointment(givenDate) {
-      var date = new Date(givenDate);
 
-      //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date with added hours and minutes
-      var myDateString;
-      date.setDate(date.getDate() + 0);
-      myDateString = ('0' + date.getDate()).slice(-2) + '/' +
-        ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
-        date.getFullYear() + '  ' +
-        ('0' + (date.getHours() - 1)).slice(-2) + ':' +
-        ('0' + date.getMinutes()).slice(-2);
+    function runCalendar(calendarDiv, appointments) {
+      var events = [];
 
-      return myDateString;
+      for (var i = 0; i < appointments.length; i++) {
+        var appointmentDateStart = new Date(appointments[i].resource.start);
+        console.log(appointmentDateStart);
+        var appointmentDateEnd = new Date(appointments[i].resource.end);
+
+        var startMinuteHourString = ('0' + (appointmentDateStart.getHours() - 1)).slice(-2) + ':' +('0' + appointmentDateStart.getMinutes()).slice(-2);
+        var endMinuteHourString = ('0' + (appointmentDateEnd.getHours() - 1)).slice(-2) + ':' +('0' + appointmentDateEnd.getMinutes()).slice(-2);
+        var eventObj ={
+          'Date' : new Date(appointmentDateStart.getFullYear(), appointmentDateStart.getMonth(), appointmentDateStart.getDate()),
+          'Title' : appointments[i].resource.type.coding[0].display+"</br>Status: "+appointments[i].resource.status+"</br> From "+startMinuteHourString+" until "+endMinuteHourString,
+          'Link': "#"
+        }
+        events.push(eventObj);
+      }
+      var settings = {};
+      caleandar(calendarDiv, events, settings);
     }
   </script>
 

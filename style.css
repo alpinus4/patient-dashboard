@@ -77,7 +77,7 @@ html, body {
   box-shadow: 0px 3px 3px 1px rgba(153, 153, 153, 0.5);
   margin-top: 15px;
   margin-bottom: 5px;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 #activeLists h1, #observationCharts h1, #medications h1, #enrolledPrograms h1, #nextAppointments h1 {
