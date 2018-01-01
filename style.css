@@ -170,3 +170,7 @@ html, body {
   --patient-medication-font-color: rgb(255, 255, 255);
   --patient-medication-font-color-datetime: rgb(245, 245, 245);
 }
+
+#nextAppointmentsComponent {
+  --next-appointments-font-size-datetime: 9pt;
+}

@@ -15,11 +15,6 @@
         padding: var(--next-appointments-padding , 10px);
       }
 
-      :host .index{
-        font-size: var(--next-appointments-font-size-index , inherit);
-        color: var(--next-appointments-font-color-index , inherit);
-      }
-
       :host .type{
         font-size: var(--next-appointments-font-size-type , inherit);
         color: var(--next-appointments-font-color-type , inherit);
@@ -34,11 +29,6 @@
         font-size: var(--next-appointments-font-size-datetime , 15pt);
         color: var(--next-appointments-font-color-datetime , rgb(88, 88, 88));
         display: var(--next-appointments-display-datetime , inherit);
-      }
-
-      :host .duration{
-        font-size: var(--next-appointments-font-size-duration , inherit);
-        color: var(--next-appointments-font-color-duration , inherit);
       }
 
     </style>
@@ -120,7 +110,7 @@
         var endMinuteHourString = ('0' + (appointmentDateEnd.getHours() - 1)).slice(-2) + ':' +('0' + appointmentDateEnd.getMinutes()).slice(-2);
         var eventObj ={
           'Date' : new Date(appointmentDateStart.getFullYear(), appointmentDateStart.getMonth(), appointmentDateStart.getDate()),
-          'Title' : appointments[i].resource.type.coding[0].display+"</br>Status: "+appointments[i].resource.status+"</br> From "+startMinuteHourString+" until "+endMinuteHourString,
+          'Title' : "<span class='type'>"+appointments[i].resource.type.coding[0].display+"</br></span><span class='status'>Status: "+appointments[i].resource.status+"</br></span><span class='datetime'> From "+startMinuteHourString+" until "+endMinuteHourString+"</span>",
           'Link': "#"
         }
         events.push(eventObj);
