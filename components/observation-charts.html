@@ -13,29 +13,27 @@
         padding: var(--observation-charts-padding , 10px);
       }
 
-      :host .index{
-        font-size: var(--observation-charts-font-size-index , inherit);
-        color: var(--observation-charts-font-color-index , inherit);
-      }
-
       :host .type{
         font-size: var(--observation-charts-font-size-type , inherit);
-        color: var(--observation-charts-font-color-type , inherit);
-      }
-
-      :host .status{
-        font-size: var(--observation-charts-font-size-status , inherit);
-        color: var(--observation-charts-font-color-status , inherit);
+        color: var(--observation-charts-font-color-type , rgb(255, 255, 255));
+        width: 100%;
+        background: #DA8232;
+        text-align: center;
+        border-radius: 25px;
       }
 
       :host .valueCodeableConcept{
         font-size: var(--observation-charts-font-size-concept , inherit);
         color: var(--observation-charts-font-color-concept , inherit);
+        width: 50%;
+        text-align: center;
       }
 
       :host .codeText{
         font-size: var(--observation-charts-font-size-code , inherit);
         color: var(--observation-charts-font-color-code , inherit);
+        width: 50%;
+        text-align: center;
       }
 
     </style>
@@ -44,13 +42,9 @@
     <!-- shadow DOM goes here -->
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
-        <p>
-            <span class="index"><b>{{displayIndex(index)}}.</b></span>
-            <span class="type">{{item.resource.category.text}} - <span class="codeText">{{item.resource.code.text}}</span></br></span>
-            <span class="status">Status: {{item.resource.status}}</br></span>
-            <span class="valueCodeableConcept">{{item.resource.valueCodeableConcept.text}}</br></span>
-
-        </p>
+          <div class="type">{{item.resource.category.text}} </br></div>
+          <center><span class="codeText">{{item.resource.code.text}}</span><span class="valueCodeableConcept">{{item.resource.valueCodeableConcept.text}}</br></span></center></br>
+          <!--<span class="status">Status: {{item.resource.status}}</br></span>-->
       </template>
     </div>
 
