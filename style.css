@@ -137,11 +137,15 @@ html, body {
     width: 60%;
 }
 
+#lastVisitsCircle {
+  float: right;
+}
+
 .label-orange {
   background-color: #ED8F33;
   border-width: 1px;
   border-color: #ED8F33;
-  border-radius: 25px;
+  border-radius: 15px;
   padding: 20px;
   margin-bottom: 20px;
 }

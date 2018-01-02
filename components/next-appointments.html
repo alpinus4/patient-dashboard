@@ -15,16 +15,19 @@
         padding: var(--next-appointments-padding , 10px);
       }
 
+      /*TYPE*/
       :host .type{
         font-size: var(--next-appointments-font-size-type , inherit);
         color: var(--next-appointments-font-color-type , inherit);
       }
 
+      /*STATUS*/
       :host .status{
         font-size: var(--next-appointments-font-size-status , inherit);
         color: var(--next-appointments-font-color-status , inherit);
       }
 
+      /*DATE TIME*/
       :host .datetime{
         font-size: var(--next-appointments-font-size-datetime , 15pt);
         color: var(--next-appointments-font-color-datetime , rgb(88, 88, 88));
@@ -97,20 +100,19 @@
   </script>
 
   <script>
-
     function runCalendar(calendarDiv, appointments) {
       var events = [];
 
       for (var i = 0; i < appointments.length; i++) {
         var appointmentDateStart = new Date(appointments[i].resource.start);
-        console.log(appointmentDateStart);
         var appointmentDateEnd = new Date(appointments[i].resource.end);
 
-        var startMinuteHourString = ('0' + (appointmentDateStart.getHours() - 1)).slice(-2) + ':' +('0' + appointmentDateStart.getMinutes()).slice(-2);
-        var endMinuteHourString = ('0' + (appointmentDateEnd.getHours() - 1)).slice(-2) + ':' +('0' + appointmentDateEnd.getMinutes()).slice(-2);
-        var eventObj ={
-          'Date' : new Date(appointmentDateStart.getFullYear(), appointmentDateStart.getMonth(), appointmentDateStart.getDate()),
-          'Title' : "<span class='type'>"+appointments[i].resource.type.coding[0].display+"</br></span><span class='status'>Status: "+appointments[i].resource.status+"</br></span><span class='datetime'> From "+startMinuteHourString+" until "+endMinuteHourString+"</span>",
+        var startMinuteHourString = ('0' + (appointmentDateStart.getHours() - 1)).slice(-2) + ':' + ('0' + appointmentDateStart.getMinutes()).slice(-2);
+        var endMinuteHourString = ('0' + (appointmentDateEnd.getHours() - 1)).slice(-2) + ':' + ('0' + appointmentDateEnd.getMinutes()).slice(-2);
+        var eventObj = {
+          'Date': new Date(appointmentDateStart.getFullYear(), appointmentDateStart.getMonth(), appointmentDateStart.getDate()),
+          'Title': "<span class='type'>" + appointments[i].resource.type.coding[0].display + "</br></span><span class='status'>Status: " + appointments[i].resource.status + "</br></span><span class='datetime'> From " + startMinuteHourString +
+            " until " + endMinuteHourString + "</span>",
           'Link': "#"
         }
         events.push(eventObj);

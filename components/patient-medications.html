@@ -5,7 +5,7 @@
   <template>
 
     <style>
-      /* shadow DOM styles go here */
+      /*MAIN*/
       :host #content{
         font-size: var(--patient-medication-font-size , 20pt);
         color: var(--patient-medication-font-color , rgb(24, 24, 24));
@@ -14,31 +14,42 @@
         column-count: 2;
       }
 
+      /*INDEX*/
       :host .index{
         font-size: var(--patient-medication-font-size-index , inherit);
         color: var(--patient-medication-font-color-index , inherit);
       }
 
+      /*MEDICATION*/
       :host .medication{
         font-size: var(--patient-medication-font-size-medication , inherit);
         color: var(--patient-medication-font-color-medication , inherit);
       }
 
+      /*DOSAGE INSTRUCTION*/
       :host .dosageInstruction{
         font-size: var(--patient-medication-font-size-dosage-instruction , inherit);
         color: var(--patient-medication-font-color-dosage-instruction , inherit);
       }
 
+      /*TITLE [INDEX, TYPE]*/
+      :host .title {
+        background: #DA8232;
+        border-radius: 15px;
+        padding-left: 5%;
+      }
+
     </style>
 
-
-    <!-- shadow DOM goes here -->
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
         <p>
+          <div class="title">
             <span class="index"><b>{{displayIndex(index)}}.</b></span>
-            <span class="medication">{{item.resource.medicationCodeableConcept.coding.0.display}}</br></span>
-            <span class="dosageInstruction">{{item.resource.dosageInstruction.0._text.extension.0.valueString}}</br></span>
+            <span class="medication" id="medication">{{item.resource.medicationCodeableConcept.coding.0.display}}</span></br>
+          </div>
+          <span class="dosageInstruction">Dosage: {{item.resource.dosageInstruction.0._text.extension.0.valueString}}</br></span></br>
+          <span class="dosageInstruction">Status: {{item.resource.status}}</br></span>
         </p>
       </template>
     </div>

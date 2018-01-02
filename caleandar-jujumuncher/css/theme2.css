@@ -100,11 +100,11 @@
       .cld-number.eventday{
         font-weight: bold;
         color: #fff;
-        background: #DD4312
+        background: #DD4312;
       }
       .cld-number.eventday:hover{
         cursor: pointer;
-        background: #eee;
+        background: #e87855;
       }
       .today .cld-number.eventday:hover{
         background: #005EFF;

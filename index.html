@@ -36,42 +36,47 @@
       <img src="./images/pixel_avatar.png" id="avatar">
       <!-- Patient image component to do -->
       </br>
-      <patient-demographics uuid="4342010" id="patientDemographicsComponent"/>
+      <patient-demographics uuid="4342010" id="patientDemographicsComponent" />
     </div>
 
     <div id="contentContainer" class="container">
       <div id="searchBar" class="panel panel-default"></div>
-        <div class="row">
-          <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="activeLists">
-            <h1>Active Lists</h1>
-            <div id="problems">
-              <h1>Problems</h1>
+      <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="activeLists">
+          <h1>Active Lists</h1>
+          <div id="problems">
+            <h1>Problems</h1>
 
-            </div>
-            <div id="lastVisits">
-              <h1>Last five visits</h1>
-              <div  class="label-orange">
-                <last-visits patientid="4342010" id="lastVisitsComponent"/>
-              </div>
-            </div>
           </div>
-          <div class="col-lg-6 col-sm-6 col-xs-6 panel panel-default" id="observationCharts">
-            <h1>Observation Charts</h1>
-            <observation-charts patientid="4342010" id="observationChartsComponent"/>
-          </div>
-          <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="medications">
-            <h1>Medications</h1>
-            <div  class="label-orange">
-              <patient-medications patientid="4342010" id="patientMedicationsComponent"/>
+          <div id="lastVisits">
+            <h1>Last five visits</h1>
+            <div class="label-orange">
+              <svg height="50" width="50" id="lastVisitsCircle">
+                <circle cx="25" cy="25" r="20" stroke-width="3" fill="#ffffff" />
+              </svg></br></br>
+              <last-visits patientid="4342010" id="lastVisitsComponent" />
             </div>
-          </div>
-          <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="enrolledPrograms">
-            <h1>Enrolled Programs</h1></div>
-          <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="nextAppointments">
-            <h1>Next Appointments</h1>
-            <next-appointments patientid="4342010" id="nextAppointmentsComponent"/>
           </div>
         </div>
+        <div class="col-lg-6 col-sm-6 col-xs-6 panel panel-default" id="observationCharts">
+          <h1>Observation Charts</h1>
+          <div class="label-orange">
+            <observation-charts patientid="4342010" id="observationChartsComponent" />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="medications">
+          <h1>Medications</h1>
+          <div class="label-orange">
+            <patient-medications patientid="4342010" id="patientMedicationsComponent" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="enrolledPrograms">
+          <h1>Enrolled Programs</h1></div>
+        <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="nextAppointments">
+          <h1>Next Appointments</h1>
+          <next-appointments patientid="4342010" id="nextAppointmentsComponent" />
+        </div>
+      </div>
 
 
     </div>

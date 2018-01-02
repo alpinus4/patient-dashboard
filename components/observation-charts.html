@@ -17,24 +17,34 @@
         font-size: var(--observation-charts-font-size-type , inherit);
         color: var(--observation-charts-font-color-type , rgb(255, 255, 255));
         width: 100%;
-        background: #DA8232;
+        background: var(--observation-charts-background-color-type , #DA8232);
         text-align: center;
-        border-radius: 25px;
+        border-radius:  var(--observation-charts-border-radius-type , 15px);
+        padding:  var(--observation-charts-padding-type , 10px);
       }
 
       :host .valueCodeableConcept{
         font-size: var(--observation-charts-font-size-concept , inherit);
-        color: var(--observation-charts-font-color-concept , inherit);
+        color: var(--observation-charts-font-color-concept , rgb(255, 255, 255));
         width: 50%;
-        text-align: center;
+        padding-left: 10%;
+        text-align: left;
+        float: right;
+        background: var(--observation-charts-background-color-concept , #E38437);
+        border-radius: var(--observation-charts-border-radius-concept , 25px);
+
+
       }
 
       :host .codeText{
         font-size: var(--observation-charts-font-size-code , inherit);
-        color: var(--observation-charts-font-color-code , inherit);
+        color: var(--observation-charts-font-color-code , rgb(255, 255, 255));
         width: 50%;
-        text-align: center;
+        text-align: left;
+        float: left;
+        padding-left: 10%;
       }
+
 
     </style>
 
@@ -42,9 +52,8 @@
     <!-- shadow DOM goes here -->
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
-          <div class="type">{{item.resource.category.text}} </br></div>
-          <center><span class="codeText">{{item.resource.code.text}}</span><span class="valueCodeableConcept">{{item.resource.valueCodeableConcept.text}}</br></span></center></br>
-          <!--<span class="status">Status: {{item.resource.status}}</br></span>-->
+          <div class="type">{{item.resource.category.text}} </br></div></br>
+          <div class="codeText">{{item.resource.code.text}}: </div><div class="valueCodeableConcept">{{item.resource.valueCodeableConcept.text}}</div></br></br>
       </template>
     </div>
 

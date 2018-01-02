@@ -22,7 +22,7 @@
       }
 
 
-      /*TYPE*/
+      /*TITLE*/
       :host .type {
         font-size: var(--last-visits-encounters-font-size-type , inherit);
         color: var(--last-visits-encounters-font-color-type , inherit);
@@ -45,6 +45,14 @@
         display: var(--last-visits-encounters-display-datetime , inherit);
       }
 
+      /*TITLE [INDEX, TYPE]*/
+      :host .title {
+        background: #DA8232;
+        border-radius: 15px;
+        padding-left: 10%;
+      }
+
+
     </style>
 
 
@@ -52,8 +60,7 @@
     <div id="lastVisitsEncounters">
       <template is="dom-repeat" items="[[toShow]]">
         <p>
-            <span class="index">{{displayIndex(index)}}.</span>
-            <span class="type">{{item.resource.type.0.text}}</br></span>
+            <div class="title"><span class="index">{{displayIndex(index)}}.</span><span class="type">{{item.resource.type.0.text}}</br></span></div>
             <span class="location">{{item.resource.location.0.location.display}}</br></span>
             <span class="datetime">{{item.resource.period.start}} </br></span>
         </p>
