@@ -17,6 +17,7 @@
   <link rel="import" href="./components/patient-medications.html">
   <link rel="import" href="./components/observation-charts.html">
   <link rel="import" href="./components/next-appointments.html">
+  <link rel="import" href="./components/conditions-problems.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -46,7 +47,12 @@
           <h1>Active Lists</h1>
           <div id="problems">
             <h1>Problems</h1>
-
+            <div class="label-orange">
+              <svg height="50" width="50" id="problemsCircle">
+                <circle cx="25" cy="25" r="20" stroke-width="3" fill="#ffffff" />
+              </svg></br></br>
+              <conditions-problems patientid="4342010" id="problemsComponent" />
+            </div>
           </div>
           <div id="lastVisits">
             <h1>Last five visits</h1>

@@ -1,0 +1,179 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="conditions-problems">
+
+  <template>
+
+    <style>
+      /* shadow DOM styles go here */
+      :host #conditionsProblems{
+        font-size: var(--conditions-problems-font-size , 20pt);
+        color: var(--conditions-problems-font-color , rgb(24, 24, 24));
+        background-color: var(--conditions-problems-background-color , inherit);
+        padding: var(--conditions-problems-padding , 10px);
+
+      }
+
+      /*INDEX*/
+      :host .index {
+        font-size: var(--conditions-problems-font-size-index , inherit);
+        color: var(--conditions-problems-font-color-index , inherit);
+        display: var(--conditions-problems-display-index , inherit);
+      }
+
+
+      /*CATEGORY*/
+      :host .category {
+        font-size: var(--conditions-problems-font-size-category , inherit);
+        color: var(--conditions-problems-font-color-category , inherit);
+        display: var(--conditions-problems-display-category , inherit);
+      }
+
+
+      /*PROBLEM/DIAGNOSIS*/
+      :host .problemDiagnosis {
+        font-size: var(--conditions-problems-font-size-problem-diagnosis , inherit);
+        color: var(--conditions-problems-font-color-problem-diagnosis , inherit);
+        display: var(--conditions-problems-display-problem-diagnosis , inherit);
+      }
+
+      /*VERIFICATION STATUS*/
+      :host .verificationStatus {
+        font-size: var(--conditions-problems-font-size-verification-status , inherit);
+        color: var(--conditions-problems-font-color-verification-status , inherit);
+        display: var(--conditions-problems-display-verification-status , inherit);
+      }
+
+      /*CLINICAL STATUS*/
+      :host .clinicalStatus {
+        font-size: var(--conditions-problems-font-size-clinical-status , inherit);
+        color: var(--conditions-problems-font-color-clinical-status , inherit);
+        display: var(--conditions-problems-display-clinical-status , inherit);
+      }
+
+
+      /*ONSET*/
+      :host .onset {
+        font-size: var(--conditions-problems-font-size-onset , 15pt);
+        color: var(--conditions-problems-font-color-onset , rgb(88, 88, 88));
+        display: var(--conditions-problems-display-onset , inherit);
+      }
+
+      /*TITLE [INDEX, TYPE]*/
+      :host .title {
+        background: #DA8232;
+        border-radius: 15px;
+        padding-left: 10%;
+      }
+
+
+    </style>
+
+
+    <!-- shadow DOM goes here -->
+    <div id="conditionsProblems">
+      <template is="dom-repeat" items="[[toShow]]">
+        <p>
+            <div class="title">
+              <span class="index">{{displayIndex(index)}}.</span>
+              <span class="category">{{item.resource.category.coding.0.display}}</span>
+              </br>
+            </div>
+            <span class="problemDiagnosis">{{item.resource.code.coding.0.display}}, {{item.resource.code.text}}</span></br></br>
+            <span class="verificationStatus">Verification status: {{item.resource.verificationStatus}}</br></span>
+            <span class="clinicalStatus">Clinical status: {{item.resource.clinicalStatus}}</br></span>
+            <span class="onset">Onset: {{item.resource.onsetDateTime}} </br></span>
+        </p>
+      </template>
+    </div>
+
+
+
+    <iron-ajax
+    url="{{url}}"
+    headers='{"Accept": "application/json+fhir"}'
+    content-type="application/json"
+    handle-as="json"
+    on-response="handleResponse"
+    method="GET"
+    on-error="_error"
+    id="iron_ajax"/>
+
+  </template>
+
+  <script>
+    class ConditionsProblems extends Polymer.Element {
+      static get is() {
+        return 'conditions-problems';
+      }
+      static get properties() {
+        return {
+          toShow: {
+            type: Array
+          },
+          patientid: {
+            type: String,
+            observer: "_changedPatientID"
+          },
+          url: {
+            type: String
+          }
+        }
+      }
+
+      constructor() {
+        super();
+      }
+
+
+      handleResponse(data) {
+        var conditions = data.detail.response.entry;
+
+        //parse dates
+        for (var i = 0; i < conditions.length; i++) {
+          conditions[i].resource.onsetDateTime = parseDate(conditions[i].resource.onsetDateTime);
+        }
+
+        this.toShow = conditions;
+      }
+
+      _changedPatientID(){
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Condition?patient=" + this.patientid;
+        this.$.iron_ajax.generateRequest();
+      }
+
+      displayIndex(index) {
+        return index + 1;
+      }
+
+      _error(event) {
+        console.log(event);
+        console.log(event.detail);
+        console.log(event.detail.error);
+        console.log(event.detail.error.message);
+        console.log(event.detail.request);
+        console.log(event.detail.response);
+        console.log(event.detail.request.response);
+      }
+
+    }
+    customElements.define(ConditionsProblems.is, ConditionsProblems);
+  </script>
+
+
+    <script>
+      function parseDateConditions(givenDate) {
+        var date = new Date(givenDate);
+
+        //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date with added hours and minutes
+        var myDateString;
+        date.setDate(date.getDate() + 0);
+        myDateString = ('0' + date.getDate()).slice(-2) + '/' +
+          ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+          date.getFullYear();
+
+        return myDateString;
+      }
+    </script>
+
+</dom-module>

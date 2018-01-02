@@ -129,12 +129,16 @@ html, body {
 
 #problems {
   float: left;
-  width: 35%;
+  width: 50%;
+}
+
+#problemsCircle {
+  float: left;
 }
 
 #lastVisits{
     float: right;
-    width: 60%;
+    width: 45%;
 }
 
 #lastVisitsCircle {
@@ -177,4 +181,11 @@ html, body {
 
 #nextAppointmentsComponent {
   --next-appointments-font-size-datetime: 9pt;
+}
+
+#problemsComponent {
+  --conditions-problems-font-size: 13pt;
+  --conditions-problems-font-size-onset: 10pt;
+  --conditions-problems-font-color-onset: rgb(245, 245, 245);
+  --conditions-problems-font-color: rgb(255, 255, 255);
 }
