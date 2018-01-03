@@ -1,18 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
-html, body {
-  height: 100%;
-  background-color: rgb(255, 255, 255);
-  overflow: hidden;
+
+body {
+  min-width: 1200px;
+  min-height: 675px;
+  font-family: 'Roboto', sans-serif;
 }
 
-
 #mainContainer {
-  margin-top: 15px;
-  margin-bottom: 40px;
-  height: calc(100% - 40px);
+  margin: 15px 10px 40px auto;
   box-shadow: 3px 10px 20px -3px rgba(97, 97, 97, 0.5);
   background-color: #F1F0F1;
+  position: absolute;
 }
 
 .orange-background {
@@ -20,56 +19,65 @@ html, body {
 }
 
 #topBar {
-  height: 11vh;
+  height: 11.5%;
+  min-height: 75px;
   width: auto;
 }
 
 #leftBar {
-  width: 13.5vw;
+  min-width: 200px;
+  width: 13.5%;
   margin-left: 15px;
   float: left;
   margin: auto;
-  height: calc(100% - 11vh);
+  margin-bottom: 0;
+  height: 91.5%;
+  position: absolute;
 }
 
 #logo {
-  width: 13.5vw;
+  width: 100%;
   height: auto;
-  vertical-align: middle;
-  display: inline-block;
-  padding: 1vh;
-  margin-top: 2vh;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 15px;
 }
 
 #logoContainer {
   background-color: #D07A2E;
-  height: 11vh;
-  width: 13.5vw;
+  height: 11.5%;
+  min-height: 75px;
+  width: 13.5%;
+  min-width: 200px;
   float: left;
 }
 
 #avatar {
   border-radius: 50%;
-  width: 8vw;
+  width: 70%;
   height: auto;
   display: block;
   margin: auto;
 }
 
 #contentContainer {
-  width: calc(100vw - 13.5vw - 1.6vw);
-  height: calc(100vh - 11vh - 55px);
-  margin-bottom: calc(11vh + 55px);
-  margin-left: 13.5vw;
+  width: 83%;
+  min-width: 970px;
+  height: 88.5%;
+  margin-left: 15%;
 }
 
 /* COMPONENTS PANELS */
-
 #searchBar {
-  height: 10vh;
   border: none;
-  margin: 15px 90px 15px 60px;
+  margin: 15px 90px 15px 25px;
   box-shadow: 3px 10px 20px -3px rgba(97, 97, 97, 0.5);
+}
+
+#searchBarInput{
+  min-height: 70px;
+  border: none;
+  box-shadow: none;
 }
 
 #activeLists, #observationCharts, #medications, #enrolledPrograms, #nextAppointments {
@@ -78,28 +86,27 @@ html, body {
   margin-top: 15px;
   margin-bottom: 5px;
   overflow-y: auto;
+  resize: both;
+  margin-left: 45px;
 }
 
 #activeLists h1, #observationCharts h1, #medications h1, #enrolledPrograms h1, #nextAppointments h1 {
   font-size: 27pt;
-  font-family: 'Roboto', sans-serif;
   font-weight: 300;
 }
 
 #activeLists {
-  height: 39vh;
-  margin-left: 75px;
+  height: 390px;
 }
 
 #observationCharts {
-  height: 40vh;
-  margin-left: 75px;
-  width: 43vw;
-  font-size: 4.5vmin;
+  height: 400px;
+  width: 53%;
+  font-size: 20pt;
 }
 
 #observationCharts h1 {
-  font-size: 3.7vmin;
+  font-size: 30pt;
   text-indent: 7%
 }
 
@@ -108,18 +115,15 @@ html, body {
 }
 
 #medications {
-  height: 25vh;
-  margin-left: 75px;
+  height: 250px;
 }
 
 #enrolledPrograms {
-  height: 25vh;
-  margin-left: 75px;
+  height: 250px;
 }
 
 #nextAppointments {
-  height: 25vh;
-  margin-left: 15px;
+  height: 250px;
 }
 
 #problems h1, #lastVisits h1 {
@@ -157,13 +161,11 @@ html, body {
 /* COMPONENTS */
 
 #patientDemographicsComponent {
-  font-family: 'Roboto', sans-serif;
   font-size: 25pt;
   --patient-demographics-font-color: rgb(255, 255, 255);
 }
 
 #lastVisitsComponent {
-  font-family: 'Roboto', sans-serif;
   --last-visits-encounters-display: block;
   --last-visits-encounters-font-size: 13pt;
   --last-visits-encounters-font-size-datetime: 10pt;
@@ -172,7 +174,6 @@ html, body {
 }
 
 #patientMedicationsComponent {
-  font-family: 'Roboto', sans-serif;
   --patient-medication-font-size: 13pt;
   --patient-medication-font-size-index : 15pt;
   --patient-medication-font-color: rgb(255, 255, 255);
