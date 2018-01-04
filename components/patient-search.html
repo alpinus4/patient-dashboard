@@ -12,17 +12,36 @@
       color: var(--patient-search-font-color , inherit);
       background-color: var(--patient-search-background-color , inherit);
     }
+
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 6px solid #db7f34;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(1080deg); }
+    }
+
     </style>
 
-    <ul class="list-group">
-      <template is="dom-repeat" items="[[patient]]" id="results">
-        <a class="list-group-item" href="#" onclick="ClickedItem(this);" id="{{item.resource.id}}">{{item.resource.name.0.given.0}}
-                                                                                            {{item.resource.name.0.family}}</a>
-      </template>
-  <li class="list-group-item" id="notFound" style="display:none;">No matching patients found.</li>
-  </ul>
+    <template is="dom-if" if="{{loading}}">
+      <div class="loader"></div>
+    </template>
 
-
+    <template is="dom-if" if="{{notLoading}}">
+      <ul class="list-group">
+        <template is="dom-repeat" items="[[patient]]" id="results">
+          <a class="list-group-item" href="#" onclick="ClickedItem(this);" id="{{item.resource.id}}">{{item.resource.name.0.given.0}}
+                                                                                              {{item.resource.name.0.family}}</a>
+        </template>
+        <li class="list-group-item" id="notFound" style="display:none;">No matching patients found.</li>
+      </ul>
+    </template>
 
   <iron-ajax url="https://fhirtest.uhn.ca/baseDstu3/Patient" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
 
@@ -45,6 +64,12 @@
           },
           sqObj: {
             type: Object
+          },
+          loading: {
+            type: Boolean
+          },
+          notLoading: {
+            type: Boolean
           }
         }
       }
@@ -53,6 +78,8 @@
       }
 
       handleResponse(data) {
+        this.loading = false;
+        this.notLoading = !this.loading;
         this.patient = data.detail.response.entry;
         if (this.patient) {
           if (this.patient.length == 0) {
@@ -60,7 +87,7 @@
           } else {
             this.$.notFound.style.display = "none";
           }
-        }else{
+        } else {
           this.$.notFound.style.display = "block";
         }
       }
@@ -76,6 +103,8 @@
           given: this.sq
         }
         this.$.iron_ajax.generateRequest();
+        this.loading = true;
+        this.notLoading = !this.loading;
       }
 
 
