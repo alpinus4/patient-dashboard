@@ -8,7 +8,7 @@
       /* shadow DOM styles go here */
       :host #content{
         font-size: var(--observation-charts-font-size , 20pt);
-        color: var(--observation-charts-font-color , rgb(24, 24, 24));
+        color: var(--observation-charts-font-color , rgb(255, 255, 255));
         background-color: var(--observation-charts-background-color , inherit);
         padding: var(--observation-charts-padding , 10px);
       }
@@ -23,21 +23,22 @@
         padding:  var(--observation-charts-padding-type , 10px);
       }
 
-      :host .valueCodeableConcept{
+      :host .observationValue{
         font-size: var(--observation-charts-font-size-concept , inherit);
         color: var(--observation-charts-font-color-concept , rgb(255, 255, 255));
         width: auto;
         padding-left: 10%;
-        text-align: left;
+        text-align: center;
+        height: auto;
       }
 
-      :host .codeText{
+      :host .observationParameter{
         font-size: var(--observation-charts-font-size-code , inherit);
         color: var(--observation-charts-font-color-code , rgb(255, 255, 255));
         width: 50%;
         text-align: left;
-        float: left;
-        padding-left: 10%;
+        padding-left: 5%;
+        height: auto;
       }
 
 
@@ -48,7 +49,8 @@
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
           <div class="type">{{item.resource.category.0.coding.0.display}} </div></br>
-          <div class="codeText">{{item.resource.code.text}} {{item.resource.code.coding.0.display}}:</div><div class="valueCodeableConcept">{{item.resource.valueQuantity.value}}  {{item.resource.valueQuantity.unit}}</div></br></br>
+          <span class="observationParameter">{{item.resource.code.text}} {{item.resource.code.coding.0.display}}:</span>
+          <span class="observationValue">{{item.resource.valueQuantity.value}}  {{item.resource.valueQuantity.unit}}</span></br></br>
       </template>
     </div>
 

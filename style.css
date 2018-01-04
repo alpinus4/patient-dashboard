@@ -80,6 +80,13 @@ body {
   box-shadow: none;
 }
 
+#searchBarInputInModal {
+  width: auto;
+  display: inline;
+  min-width: 50%;
+  box-shadow: none;
+}
+
 #activeLists, #observationCharts, #medications, #enrolledPrograms, #nextAppointments {
   border: none;
   box-shadow: 0px 3px 3px 1px rgba(153, 153, 153, 0.5);
