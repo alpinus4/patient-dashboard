@@ -9,30 +9,34 @@
 
       :host {
         width: 100%;
-        color: var(--patient-demographics-font-color , rgb(255, 255, 255));
       }
 
       :host #content {
         padding: 10px;
+        color: var(--patient-demographics-font-color , rgb(255, 255, 255));
+        font-size: var(--patient-demographics-font-size , 26pt);
       }
-
       :host #name {
         text-align: center;
         font-size: var(--patient-demographics-font-size-name , 26pt);
+        color: var(--patient-demographics-font-color-name , inherit);
       }
 
       :host #maleAge {
         font-size: var(--patient-demographics-font-size-male-age , 22pt);
+        color: var(--patient-demographics-font-color-male-age , inherit);
         margin-left: 15px;
       }
 
       :host #birthdate {
         font-size: var(--patient-demographics-font-size-birthdate , 22pt);
+        color: var(--patient-demographics-font-color-birthdate , inherit);
       }
 
       :host #birthdateTitle {
         font-weight: 900;
         font-size: var(--patient-demographics-font-size-birthdate-title , 22pt);
+        color: var(--patient-demographics-font-color-birthdate-title, inherit);
       }
 
     </style>
