@@ -135,11 +135,11 @@
     :host .cld-number.eventday{
       font-weight: bold;
       color: #fff;
-      background: #DD4312;
+      background: #DD4312 !important;
     }
     :host .cld-number.eventday:hover{
       cursor: pointer;
-      background: #e87855;
+      background: #e87855 !important;
     }
     </style>
 
@@ -180,11 +180,15 @@
 
       handleResponse(data) {
         var nextAppointments = data.detail.response.entry;
-        runCalendar(this.$.caleandar, nextAppointments);
+        if(nextAppointments){
+          runCalendar(this.$.caleandar, nextAppointments);
+        }else{
+          runEmptyCalendar(this.$.caleandar);
+        }
       }
 
       _changedPatientID() {
-        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
+        this.url = "https://fhirtest.uhn.ca/baseDstu3/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 
@@ -218,12 +222,18 @@
         var endMinuteHourString = ('0' + (appointmentDateEnd.getHours() - 1)).slice(-2) + ':' + ('0' + appointmentDateEnd.getMinutes()).slice(-2);
         var eventObj = {
           'Date': new Date(appointmentDateStart.getFullYear(), appointmentDateStart.getMonth(), appointmentDateStart.getDate()),
-          'Title': "<span class='type'>" + appointments[i].resource.type.coding[0].display + "</br></span><span class='status'>Status: " + appointments[i].resource.status + "</br></span><span class='datetime'> From " + startMinuteHourString +
+          'Title': "<span class='type'>" + appointments[i].resource.description + "</br></span><span class='status'>Status: " + appointments[i].resource.status + "</br></span><span class='datetime'> From " + startMinuteHourString +
             " until " + endMinuteHourString + "</span>",
           'Link': "#"
         }
         events.push(eventObj);
       }
+      var settings = {};
+      caleandar(calendarDiv, events, settings);
+    }
+
+    function runEmptyCalendar(calendarDiv){
+      var events = [];
       var settings = {};
       caleandar(calendarDiv, events, settings);
     }

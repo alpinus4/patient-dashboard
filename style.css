@@ -31,7 +31,7 @@ body {
   float: left;
   margin: auto;
   margin-bottom: 0;
-  height: 91.5%;
+  height: 92%;
   position: absolute;
 }
 
@@ -115,15 +115,15 @@ body {
 }
 
 #medications {
-  height: 250px;
+  height: 300px;
 }
 
 #enrolledPrograms {
-  height: 250px;
+  height: 300px;
 }
 
 #nextAppointments {
-  height: 250px;
+  height: 300px;
 }
 
 #problems h1, #lastVisits h1 {
@@ -156,6 +156,7 @@ body {
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 20px;
+  min-height: 150px;
 }
 
 /* COMPONENTS */

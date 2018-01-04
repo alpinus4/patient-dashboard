@@ -62,7 +62,7 @@
         <p>
             <div class="title"><span class="index">{{displayIndex(index)}}.</span><span class="type">{{item.resource.type.0.text}}</br></span></div>
             <span class="location">{{item.resource.location.0.location.display}}</br></span>
-            <span class="datetime">{{item.resource.period.start}} </br></span>
+            <span class="datetime">From {{item.resource.period.start}} until {{item.resource.period.end}}</br></span>
         </p>
       </template>
     </div>
@@ -116,13 +116,14 @@
         //parse dates
         for (var i = 0; i < encounters.length; i++) {
           encounters[i].resource.period.start = parseDate(encounters[i].resource.period.start);
+          encounters[i].resource.period.end = parseDate(encounters[i].resource.period.end);
         }
 
         this.toShow = encounters;
       }
 
       _changedPatientID(){
-        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Encounter?patient=" + this.patientid;
+        this.url = "https://fhirtest.uhn.ca/baseDstu3/Encounter?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 

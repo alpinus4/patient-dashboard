@@ -7,6 +7,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <script src="./main.js"></script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
 
@@ -18,14 +20,36 @@
   <link rel="import" href="./components/observation-charts.html">
   <link rel="import" href="./components/next-appointments.html">
   <link rel="import" href="./components/conditions-problems.html">
+  <link rel="import" href="./components/patient-search.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Patient Dashboard</title>
-
 </head>
 
 <body class="container-fluid">
+
+  <!-- SEARCH RESULTS MODAL-->
+  <div class="modal fade" id="searchResultsModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Search patient</h4>
+          </div>
+          <div class="modal-body">
+            <form action="javascript:NewSearchQueryInModal()" id="searchFormInModal">
+              Patient name:
+              <input type="text" id="searchBarInputInModal" class="form-control">
+              <button type="submit" class="btn btn-default btn-lg" id="submitBtnInModal"><span class="glyphicon glyphicon-search"></span></button></br>
+
+              <patient-search id="searchResults"/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <div id="mainContainer">
     <div id="logoContainer">
       <img src="images/logo.png" id="logo">
@@ -37,11 +61,17 @@
       <img src="./images/pixel_avatar.png" id="avatar">
       <!-- Patient image component to do -->
       </br>
-      <patient-demographics uuid="4342010" id="patientDemographicsComponent" />
+      <span id="patientDemographicsComponentContainer">
+        <patient-demographics uuid="10203" id="patientDemographicsComponent" />
+      </span>
     </div>
 
     <div id="contentContainer" class="container">
-      <div id="searchBar"> <input type="text" class="form-control input-lg" id="searchBarInput"></div>
+      <form action="javascript:NewSearchQuery()" id="searchForm">
+        <div id="searchBar">
+          <input type="text" class="form-control input-lg" id="searchBarInput">
+        </div>
+      </form>
       <div class="row">
         <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="activeLists">
           <h1>Active Lists</h1>
@@ -51,7 +81,9 @@
               <svg height="50" width="50" id="problemsCircle">
                 <circle cx="25" cy="25" r="20" stroke-width="3" fill="#ffffff" />
               </svg></br></br>
-              <conditions-problems patientid="4342010" id="problemsComponent" />
+              <span id="problemsComponentContainer">
+                <conditions-problems patientid="4342010" id="problemsComponent" />
+              </span>
             </div>
           </div>
           <div id="lastVisits">
@@ -60,27 +92,38 @@
               <svg height="50" width="50" id="lastVisitsCircle">
                 <circle cx="25" cy="25" r="20" stroke-width="3" fill="#ffffff" />
               </svg></br></br>
-              <last-visits patientid="4342010" id="lastVisitsComponent" />
+              <span id="lastVisitsComponentContainer">
+                <last-visits patientid="4342010" id="lastVisitsComponent" />
+              </span>
             </div>
           </div>
         </div>
         <div class="col-lg-6 col-sm-6 col-xs-6 panel panel-default" id="observationCharts">
           <h1>Observation Charts</h1>
           <div class="label-orange">
-            <observation-charts patientid="4342010" id="observationChartsComponent" />
+            <span id="observationChartsComponentContainer">
+              <observation-charts patientid="4342010" id="observationChartsComponent" />
+            </span>
           </div>
         </div>
         <div class="col-lg-4 col-sm-4 col-xs-4 panel panel-default" id="medications">
           <h1>Medications</h1>
           <div class="label-orange">
-            <patient-medications patientid="4342010" id="patientMedicationsComponent" />
+            <span id="patientMedicationsComponentContainer">
+              <patient-medications patientid="4342010" id="patientMedicationsComponent" />
+            </span>
           </div>
         </div>
         <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="enrolledPrograms">
-          <h1>Enrolled Programs</h1></div>
+          <h1>Enrolled Programs</h1>
+          <span id="enrolledProgramsComponentContainer">
+          </span>
+        </div>
         <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="nextAppointments">
           <h1>Next Appointments</h1>
-          <next-appointments patientid="4342010" id="nextAppointmentsComponent" />
+          <span id="nextAppointmentsComponentContainer">
+            <next-appointments patientid="4342010" id="nextAppointmentsComponent" />
+          </span>
         </div>
       </div></br>
 

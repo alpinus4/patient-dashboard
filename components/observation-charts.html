@@ -51,8 +51,8 @@
     <!-- shadow DOM goes here -->
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
-          <div class="type">{{item.resource.category.text}} </div></br>
-          <div class="codeText">{{item.resource.code.text}}:</div><div class="valueCodeableConcept">{{item.resource.valueCodeableConcept.text}}</div></br></br>
+          <div class="type">{{item.resource.category.0.coding.0.code}} </div></br>
+          <div class="codeText">{{item.resource.code.text}}:</div><div class="valueCodeableConcept">{{item.resource.valueQuantity.value}}  {{item.resource.valueQuantity.unit}}</div></br></br>
       </template>
     </div>
 
@@ -95,10 +95,11 @@
 
       handleResponse(data) {
         this.toShow = data.detail.response.entry;
+        console.log(this.toShow);
       }
 
       _changedPatientID(){
-        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Observation?patient=" + this.patientid;
+        this.url = "https://fhirtest.uhn.ca/baseDstu3/Observation?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 

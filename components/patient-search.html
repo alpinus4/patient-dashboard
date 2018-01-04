@@ -1,0 +1,94 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="https://polygit.org/polymer+v2.0.0/shadycss+webcomponents+1.0.0/components/iron-ajax/iron-ajax.html">
+
+
+
+<dom-module id="patient-search">
+  <template>
+
+    <style>
+    :host{
+      font-size: var(--patient-search-font-size , inherit);
+      color: var(--patient-search-font-color , inherit);
+      background-color: var(--patient-search-background-color , inherit);
+    }
+    </style>
+
+    <ul class="list-group">
+      <template is="dom-repeat" items="[[patient]]" id="results">
+        <a class="list-group-item" href="#" onclick="ClickedItem(this);" id="{{item.resource.id}}">{{item.resource.name.0.given.0}}
+                                                                                            {{item.resource.name.0.family}}</a>
+      </template>
+  <li class="list-group-item" id="notFound" style="display:none;">No matching patients found.</li>
+  </ul>
+
+
+
+  <iron-ajax url="https://fhirtest.uhn.ca/baseDstu3/Patient" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
+
+  </template>
+
+  <script>
+    class PatientSearch extends Polymer.Element {
+      static get is() {
+        return 'patient-search';
+      }
+      static get properties() {
+        return {
+          patient: {
+            type: Array,
+            notify: true
+          },
+          sq: {
+            type: String,
+            observer: "_changedSQ"
+          },
+          sqObj: {
+            type: Object
+          }
+        }
+      }
+      constructor() {
+        super();
+      }
+
+      handleResponse(data) {
+        this.patient = data.detail.response.entry;
+        console.log(this.patient);
+        if (this.patient) {
+          if (this.patient.length == 0) {
+            this.$.notFound.style.display = "block";
+          } else {
+            this.$.notFound.style.display = "none";
+          }
+        }else{
+          this.$.notFound.style.display = "block";
+        }
+      }
+
+
+      _error(event) {
+        console.log(event);
+        console.log(event.detail);
+        console.log(event.detail.error);
+        console.log(event.detail.error.message);
+        console.log(event.detail.request);
+        console.log(event.detail.response);
+        console.log(event.detail.request.response);
+      }
+
+      _changedSQ() {
+
+        this.sqObj = {
+          given: this.sq
+        }
+        this.$.iron_ajax.generateRequest();
+      }
+
+
+    }
+    customElements.define(PatientSearch.is, PatientSearch);
+  </script>
+
+
+</dom-module>

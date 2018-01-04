@@ -18,21 +18,21 @@
 
       :host #name {
         text-align: center;
-        font-size: var(--patient-demographics-font-size-name , 32pt);
+        font-size: var(--patient-demographics-font-size-name , 26pt);
       }
 
       :host #maleAge {
-        font-size: var(--patient-demographics-font-size-male-age , 24pt);
+        font-size: var(--patient-demographics-font-size-male-age , 22pt);
         margin-left: 15px;
       }
 
       :host #birthdate {
-        font-size: var(--patient-demographics-font-size-birthdate , 24pt);
+        font-size: var(--patient-demographics-font-size-birthdate , 22pt);
       }
 
       :host #birthdateTitle {
         font-weight: 900;
-        font-size: var(--patient-demographics-font-size-birthdate-title , 24pt);
+        font-size: var(--patient-demographics-font-size-birthdate-title , 22pt);
       }
 
     </style>
@@ -95,9 +95,20 @@
 
       handleResponse(data) {
         var tmp_patient = data.detail.response;
-        tmp_patient.gender = __capitalizeFirstLetter(tmp_patient.gender);
+
+        if(tmp_patient.gender){
+          tmp_patient.gender = __capitalizeFirstLetter(tmp_patient.gender);
+        }else{
+          tmp_patient.gender = "-";
+        }
+
         this.patient = tmp_patient
-        this.age = __calculateAge(this.patient.birthDate);
+
+        if(this.patient.birthDate){
+          this.age = __calculateAge(this.patient.birthDate);
+        } else {
+          this.age = 0;
+        }
       }
 
       _error(event) {
@@ -111,7 +122,7 @@
       }
 
       _changedUUID() {
-        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient/" + this.uuid;
+        this.url = "https://fhirtest.uhn.ca/baseDstu3/Patient/" + this.uuid;
         this.$.iron_ajax.generateRequest();
       }
 
