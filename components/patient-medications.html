@@ -108,11 +108,11 @@
         if(medications){
           //parse dates
           for (var i = 0; i < medications.length; i++) {
-            medications[i].resource.whenHandedOver = parseDateMedication(medications[i].resource.whenHandedOver);
+            medications[i].resource.whenHandedOver = __parseDate(medications[i].resource.whenHandedOver, true);
           }
           this.toShow = medications;
         }else{
-
+          __notFound(this.$.content)
         }
       }
 
@@ -138,23 +138,5 @@
     }
     customElements.define(PatientMedications.is, PatientMedications);
   </script>
-
-
-    <script>
-      function parseDateMedication(givenDate) {
-        var date = new Date(givenDate);
-
-        //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date with added hours and minutes
-        var myDateString;
-        date.setDate(date.getDate() + 0);
-        myDateString = ('0' + date.getDate()).slice(-2) + '/' +
-          ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
-          date.getFullYear() + '  ' +
-          ('0' + (date.getHours() - 1)).slice(-2) + ':' +
-          ('0' + date.getMinutes()).slice(-2);
-
-        return myDateString;
-      }
-    </script>
 
 </dom-module>

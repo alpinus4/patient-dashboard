@@ -180,10 +180,10 @@
 
       handleResponse(data) {
         var nextAppointments = data.detail.response.entry;
-        if(nextAppointments){
+        if (nextAppointments) {
           runCalendar(this.$.caleandar, nextAppointments);
-        }else{
-          runEmptyCalendar(this.$.caleandar);
+        } else {
+          __notFound(this.$.content);
         }
       }
 
@@ -228,12 +228,6 @@
         }
         events.push(eventObj);
       }
-      var settings = {};
-      caleandar(calendarDiv, events, settings);
-    }
-
-    function runEmptyCalendar(calendarDiv){
-      var events = [];
       var settings = {};
       caleandar(calendarDiv, events, settings);
     }

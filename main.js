@@ -7,7 +7,6 @@ function ClickedItem(patientBtn) {
 }
 
 function putIDToComponents(patientid) {
-  console.log(patientid);
   document.getElementById("patientDemographicsComponentContainer").innerHTML =
   '<patient-demographics uuid="'+patientid+'" id="patientDemographicsComponent" />';
   document.getElementById("nextAppointmentsComponentContainer").innerHTML =

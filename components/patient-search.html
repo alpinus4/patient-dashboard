@@ -54,7 +54,6 @@
 
       handleResponse(data) {
         this.patient = data.detail.response.entry;
-        console.log(this.patient);
         if (this.patient) {
           if (this.patient.length == 0) {
             this.$.notFound.style.display = "block";

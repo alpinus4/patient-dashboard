@@ -130,20 +130,5 @@
     customElements.define(PatientDemographics.is, PatientDemographics);
   </script>
 
-  <script>
-
-  //part of code from https://stackoverflow.com/questions/4060004/calculate-age-given-the-birth-date-in-the-format-yyyymmdd
-    function __calculateAge(givenBirthdate) {
-      birthdate = new Date(givenBirthdate);
-      var ageDifMs = Date.now() - birthdate.getTime();
-      var ageDate = new Date(ageDifMs); // miliseconds from epoch
-      return Math.abs(ageDate.getUTCFullYear() - 1970);
-    }
-
-    //part of code from https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
-    function __capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-  </script>
 
 </dom-module>

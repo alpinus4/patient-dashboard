@@ -8,6 +8,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <script src="./main.js"></script>
+  <script src="./components/needed-functions.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -62,7 +63,7 @@
       <!-- Patient image component to do -->
       </br>
       <span id="patientDemographicsComponentContainer">
-        <patient-demographics uuid="10203" id="patientDemographicsComponent" />
+        <patient-demographics id="patientDemographicsComponent" />
       </span>
     </div>
 
@@ -82,7 +83,7 @@
                 <circle cx="25" cy="25" r="20" stroke-width="3" fill="#ffffff" />
               </svg></br></br>
               <span id="problemsComponentContainer">
-                <conditions-problems patientid="4342010" id="problemsComponent" />
+                <conditions-problems id="problemsComponent" />
               </span>
             </div>
           </div>
@@ -93,7 +94,7 @@
                 <circle cx="25" cy="25" r="20" stroke-width="3" fill="#ffffff" />
               </svg></br></br>
               <span id="lastVisitsComponentContainer">
-                <last-visits patientid="4342010" id="lastVisitsComponent" />
+                <last-visits id="lastVisitsComponent" />
               </span>
             </div>
           </div>
@@ -102,7 +103,7 @@
           <h1>Observation Charts</h1>
           <div class="label-orange">
             <span id="observationChartsComponentContainer">
-              <observation-charts patientid="4342010" id="observationChartsComponent" />
+              <observation-charts id="observationChartsComponent" />
             </span>
           </div>
         </div>
@@ -110,7 +111,7 @@
           <h1>Medications</h1>
           <div class="label-orange">
             <span id="patientMedicationsComponentContainer">
-              <patient-medications patientid="4342010" id="patientMedicationsComponent" />
+              <patient-medications id="patientMedicationsComponent" />
             </span>
           </div>
         </div>
@@ -122,7 +123,7 @@
         <div class="col-lg-3 col-sm-3 col-xs-3 panel panel-default" id="nextAppointments">
           <h1>Next Appointments</h1>
           <span id="nextAppointmentsComponentContainer">
-            <next-appointments patientid="4342010" id="nextAppointmentsComponent" />
+            <next-appointments id="nextAppointmentsComponent" />
           </span>
         </div>
       </div></br>

@@ -6,7 +6,7 @@
 
     <style>
       /* shadow DOM styles go here */
-      :host #conditionsProblems{
+      :host #content{
         font-size: var(--conditions-problems-font-size , 20pt);
         color: var(--conditions-problems-font-color , rgb(24, 24, 24));
         background-color: var(--conditions-problems-background-color , inherit);
@@ -71,7 +71,7 @@
 
 
     <!-- shadow DOM goes here -->
-    <div id="conditionsProblems">
+    <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
         <p>
             <div class="title">
@@ -85,19 +85,11 @@
             <span class="onset">Onset: {{item.resource.onsetDateTime}} </br></span>
         </p>
       </template>
-    </div>
+  </div>
 
 
 
-    <iron-ajax
-    url="{{url}}"
-    headers='{"Accept": "application/json+fhir"}'
-    content-type="application/json"
-    handle-as="json"
-    on-response="handleResponse"
-    method="GET"
-    on-error="_error"
-    id="iron_ajax"/>
+  <iron-ajax url="{{url}}" headers='{"Accept": "application/json+fhir"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax" />
 
   </template>
 
@@ -129,15 +121,19 @@
       handleResponse(data) {
         var conditions = data.detail.response.entry;
 
-        //parse dates
-        for (var i = 0; i < conditions.length; i++) {
-          conditions[i].resource.onsetDateTime = parseDate(conditions[i].resource.onsetDateTime);
-        }
+        if (conditions) {
+          //parse dates
+          for (var i = 0; i < conditions.length; i++) {
+            conditions[i].resource.onsetDateTime = __parseDate(conditions[i].resource.onsetDateTime, false);
+          }
 
-        this.toShow = conditions;
+          this.toShow = conditions;
+        } else {
+          __notFound(this.$.content);
+        }
       }
 
-      _changedPatientID(){
+      _changedPatientID() {
         this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Condition?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
@@ -159,21 +155,5 @@
     }
     customElements.define(ConditionsProblems.is, ConditionsProblems);
   </script>
-
-
-    <script>
-      function parseDateConditions(givenDate) {
-        var date = new Date(givenDate);
-
-        //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date with added hours and minutes
-        var myDateString;
-        date.setDate(date.getDate() + 0);
-        myDateString = ('0' + date.getDate()).slice(-2) + '/' +
-          ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
-          date.getFullYear();
-
-        return myDateString;
-      }
-    </script>
 
 </dom-module>
