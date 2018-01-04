@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 
-<dom-module id="patient-medications">
+<dom-module id="enrolled-programs">
 
   <template>
 
@@ -79,9 +79,9 @@
   </template>
 
   <script>
-    class PatientMedications extends Polymer.Element {
+    class EnrolledPrograms extends Polymer.Element {
       static get is() {
-        return 'patient-medications';
+        return 'enrolled-programs';
       }
       static get properties() {
         return {
@@ -130,7 +130,7 @@
       }
 
     }
-    customElements.define(PatientMedications.is, PatientMedications);
+    customElements.define(EnrolledPrograms.is, EnrolledPrograms);
   </script>
 
 </dom-module>
