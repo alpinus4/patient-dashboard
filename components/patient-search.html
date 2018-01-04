@@ -39,7 +39,9 @@
           <a class="list-group-item" href="#" onclick="ClickedItem(this);" id="{{item.resource.id}}">{{item.resource.name.0.given.0}}
                                                                                               {{item.resource.name.0.family}}</a>
         </template>
-        <li class="list-group-item" id="notFound" style="display:none;">No matching patients found.</li>
+        <template is="dom-if" if="{{notFound}}">
+          <li class="list-group-item" id="notFound">No matching patients found.</li>
+        </template>
       </ul>
     </template>
 
@@ -70,25 +72,29 @@
           },
           notLoading: {
             type: Boolean
+          },
+          notFound: {
+            type: Boolean
           }
         }
       }
       constructor() {
         super();
+        this.notFound = false;
       }
 
       handleResponse(data) {
         this.loading = false;
-        this.notLoading = !this.loading;
+        this.notLoading = true;
         this.patient = data.detail.response.entry;
         if (this.patient) {
           if (this.patient.length == 0) {
-            this.$.notFound.style.display = "block";
+            this.notFound = true;
           } else {
-            this.$.notFound.style.display = "none";
+            this.notFound = false;
           }
         } else {
-          this.$.notFound.style.display = "block";
+          this.notFound = true;
         }
       }
 
@@ -104,7 +110,7 @@
         }
         this.$.iron_ajax.generateRequest();
         this.loading = true;
-        this.notLoading = !this.loading;
+        this.notLoading = false;
       }
 
 
