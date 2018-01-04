@@ -13,55 +13,13 @@
         padding: var(--patient-medication-padding , 10px);
       }
 
-      /*INDEX*/
-      :host .index{
-        font-size: var(--patient-medication-font-size-index , inherit);
-        color: var(--patient-medication-font-color-index , inherit);
-      }
-
-      /*MEDICATION*/
-      :host .medication{
-        font-size: var(--patient-medication-font-size-medication , inherit);
-        color: var(--patient-medication-font-color-medication , inherit);
-      }
-
-      /*DOSAGE INSTRUCTION*/
-      :host .dosageInstruction{
-        font-size: var(--patient-medication-font-size-dosage-instruction , inherit);
-        color: var(--patient-medication-font-color-dosage-instruction , inherit);
-      }
-
-      /*STATUS*/
-      :host .status{
-        font-size: var(--patient-medication-font-size-status , inherit);
-        color: var(--patient-medication-font-color-status , inherit);
-      }
-
-      /*HANDED OVER DATE*/
-      :host .handedOver{
-        font-size: var(--patient-medication-font-size-datetime , 11pt);
-        color: var(--patient-medication-font-color-datetime , rgb(88, 88, 88));
-      }
-
-      /*TITLE [INDEX, TYPE]*/
-      :host .title {
-        background: #DA8232;
-        border-radius: 15px;
-        padding-left: 5%;
-      }
 
     </style>
 
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
         <p>
-          <div class="title">
-            <span class="index"><b>{{displayIndex(index)}}.</b></span>
-            <span class="medication" id="medication">{{item.resource.medicationCodeableConcept.coding.0.display}}</span></br>
-          </div>
-          <!--<span class="dosageInstruction">Dosage: {{item.resource.dosageInstruction.0._text.extension.0.valueString}}</br></span>-->
-          <span class="status">Status: {{item.resource.status}}</br></span>
-          <span class="handedOver">Handed over: {{item.resource.whenHandedOver}}</br></span>
+
         </p>
       </template>
     </div>
@@ -104,13 +62,9 @@
 
 
       handleResponse(data) {
-        var medications = data.detail.response.entry;
-        if(medications){
-          //parse dates
-          for (var i = 0; i < medications.length; i++) {
-            medications[i].resource.whenHandedOver = __parseDate(medications[i].resource.whenHandedOver, true);
-          }
-          this.toShow = medications;
+        var enrolledPrograms = data.detail.response.entry;
+        if(enrolledPrograms){
+          this.toShow = enrolledPrograms;
         }else{
           __notFound(this.$.content)
         }
