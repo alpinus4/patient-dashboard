@@ -188,7 +188,7 @@
       }
 
       _changedPatientID() {
-        this.url = "https://fhirtest.uhn.ca/baseDstu3/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
+        this.url = "http://sqlonfhir-stu3.azurewebsites.net/fhir/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 

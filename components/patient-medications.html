@@ -117,7 +117,7 @@
       }
 
       _changedPatientID(){
-        this.url = "https://fhirtest.uhn.ca/baseDstu3/MedicationDispense?patient=" + this.patientid;
+        this.url = "http://sqlonfhir-stu3.azurewebsites.net/fhir/MedicationDispense?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 
