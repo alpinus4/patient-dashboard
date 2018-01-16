@@ -102,7 +102,7 @@
       }
 
       _changedPatientID(){
-        this.url = "http://sqlonfhir-stu3.azurewebsites.net/fhir/Observation?patient=" + this.patientid;
+        this.url = "https://syntheticmass.mitre.org/fhir/Observation?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 

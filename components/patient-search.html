@@ -46,7 +46,7 @@
       </ul>
     </template>
 
-  <iron-ajax url="https://syntheticmass.mitre.org/fhir/Patient" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
+  <iron-ajax url="http://ontoserver.csiro.au/stu3-latest/Patient" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
 
   </template>
 
@@ -85,6 +85,7 @@
       }
 
       handleResponse(data) {
+        console.log(data.detail.response);
         this.loading = false;
         this.notLoading = true;
         this.patient = data.detail.response.entry;
