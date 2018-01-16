@@ -52,6 +52,20 @@
         padding-left: 10%;
       }
 
+      /*LOADING SPINNER*/
+      .loader {
+        border: 6px solid #cc6917;
+        border-radius: 50%;
+        border-top: 6px solid #ffffff;
+        width: 20px;
+        height: 20px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(1080deg); }
+      }
 
     </style>
 
@@ -67,7 +81,9 @@
       </template>
   </div>
 
-
+  <template is="dom-if" if="{{loading}}">
+    <div class="loader"></div>
+  </template>
 
   <iron-ajax url="{{url}}" headers='{"Accept": "application/json+fhir"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax" />
 
@@ -86,6 +102,9 @@
           patientid: {
             type: String,
             observer: "_changedPatientID"
+          },
+          loading: {
+            type: Boolean
           },
           url: {
             type: String
@@ -114,11 +133,15 @@
         } else {
           __notFound(this.$.content);
         }
+
+        this.loading = false;
       }
 
       _changedPatientID() {
         this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Encounter?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
+        this.toShow = [];
+        this.loading = true;
       }
 
       displayIndex(index) {

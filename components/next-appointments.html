@@ -33,114 +33,126 @@
         display: var(--next-appointments-display-datetime , inherit);
       }
 
-    </style>
+      /*LOADING SPINNER*/
+      .loader {
+        border: 6px solid #cc6917;
+        border-radius: 50%;
+        border-top: 6px solid #ffffff;
+        width: 25px;
+        height: 25px;
+        animation: spin 2s linear infinite;
+      }
 
-    <style>
-    /*STYLES FOR CALENDAR*/
-    :host .cld-main{
-      width: 100%;
-    }
-    :host .cld-main a{
-      color: #c86811;
-    }
-    :host .cld-main svg{
-      fill: #ee7c14;
-    }
-    :host .cld-datetime{
-      position: relative;
-      width: 66%;
-      min-width: 75px;
-      max-width: 225px;
-      margin: auto;
-      overflow: hidden;
-    }
-    :host .cld-datetime .today{
-      position: relative;
-      float: left;
-      width: calc(100% - 40px);
-      margin: auto;
-      text-align: center;
-    }
-    :host .cld-nav{
-      position: relative;
-      width: 20px;
-      height: 20px;
-      margin-top: 2px;
-    }
-    :host .cld-nav:hover{
-      cursor: pointer;
-    }
-    :host .cld-nav:hover svg{
-        fill: #b56319;
-    }
-    :host .cld-rwd{
-      float: left;
-    }
-    :host .cld-fwd{
-      float: right;
-    }
-    :host .cld-labels, .cld-days{
-      padding-left: 0;
-    }
-    :host .cld-label, .cld-day{
-      box-sizing: border-box;
-      display: inline-block;
-      width: 14.28%;
-      text-align: center;
-    }
-    :host .cld-day{
-      border: 1px solid #eee;
-    }
-    :host .cld-day.today .cld-number{
-      background: #DA8232;
-      color: #fff;
-    }
-    :host .cld-day.disableDay{
-      opacity: 0.5;
-    }
-    :host .cld-day.nextMonth, .cld-day.prevMonth{
-      opacity: 0.33;
-    }
-    :host .cld-number{
-      position: relative;
-      margin: 0;
-      padding: 10px;
-    }
-    :host .cld-title{
-      position: absolute;
-      z-index: 5;
-      display: none;
-      top: 35px;
-      left: 0;
-      padding: 5px 10px;
-      background: #fff;
-      white-space: nowrap;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 10pt;
-    }
-    :host .cld-number:hover .cld-title{
-      display: block;
-    }
-    :host .cld-title::before{
-      content: '';
-      position: absolute;
-      top: -7.5px; left: 10px;
-      width: 0;
-      height: 0;
-      border-left: 7.5px solid transparent;
-      border-right: 7.5px solid transparent;
-      border-bottom: 7.5px solid #ccc;
-    }
-    :host .cld-number.eventday{
-      font-weight: bold;
-      color: #fff;
-      background: #DD4312 !important;
-    }
-    :host .cld-number.eventday:hover{
-      cursor: pointer;
-      background: #e87855 !important;
-    }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(1080deg); }
+      }
+
+      /*STYLES FOR CALENDAR*/
+      :host .cld-main{
+        width: 100%;
+      }
+      :host .cld-main a{
+        color: #c86811;
+      }
+      :host .cld-main svg{
+        fill: #ee7c14;
+      }
+      :host .cld-datetime{
+        position: relative;
+        width: 66%;
+        min-width: 75px;
+        max-width: 225px;
+        margin: auto;
+        overflow: hidden;
+      }
+      :host .cld-datetime .today{
+        position: relative;
+        float: left;
+        width: calc(100% - 40px);
+        margin: auto;
+        text-align: center;
+      }
+      :host .cld-nav{
+        position: relative;
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+      }
+      :host .cld-nav:hover{
+        cursor: pointer;
+      }
+      :host .cld-nav:hover svg{
+          fill: #b56319;
+      }
+      :host .cld-rwd{
+        float: left;
+      }
+      :host .cld-fwd{
+        float: right;
+      }
+      :host .cld-labels, .cld-days{
+        padding-left: 0;
+      }
+      :host .cld-label, .cld-day{
+        box-sizing: border-box;
+        display: inline-block;
+        width: 14.28%;
+        text-align: center;
+      }
+      :host .cld-day{
+        border: 1px solid #eee;
+      }
+      :host .cld-day.today .cld-number{
+        background: #DA8232;
+        color: #fff;
+      }
+      :host .cld-day.disableDay{
+        opacity: 0.5;
+      }
+      :host .cld-day.nextMonth, .cld-day.prevMonth{
+        opacity: 0.33;
+      }
+      :host .cld-number{
+        position: relative;
+        margin: 0;
+        padding: 10px;
+      }
+      :host .cld-title{
+        position: absolute;
+        z-index: 5;
+        display: none;
+        top: 35px;
+        left: 0;
+        padding: 5px 10px;
+        background: #fff;
+        white-space: nowrap;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 10pt;
+      }
+      :host .cld-number:hover .cld-title{
+        display: block;
+      }
+      :host .cld-title::before{
+        content: '';
+        position: absolute;
+        top: -7.5px; left: 10px;
+        width: 0;
+        height: 0;
+        border-left: 7.5px solid transparent;
+        border-right: 7.5px solid transparent;
+        border-bottom: 7.5px solid #ccc;
+      }
+      :host .cld-number.eventday{
+        font-weight: bold;
+        color: #fff;
+        background: #DD4312 !important;
+      }
+      :host .cld-number.eventday:hover{
+        cursor: pointer;
+        background: #e87855 !important;
+      }
     </style>
 
 
@@ -148,6 +160,10 @@
     <div id="content">
       <div id="caleandar"/>
     </div>
+
+    <template is="dom-if" if="{{loading}}">
+      <div class="loader"></div>
+    </template>
 
   <iron-ajax url="{{url}}" headers='{"Accept": "application/json+fhir"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax" />
 
@@ -162,6 +178,9 @@
         return {
           toShow: {
             type: Array
+          },
+          loading: {
+            type: Boolean
           },
           patientid: {
             type: String,
@@ -185,11 +204,14 @@
         } else {
           __notFound(this.$.content);
         }
+        this.loading = false;
       }
 
       _changedPatientID() {
         this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
+        this.toShow = [];
+        this.loading = true;
       }
 
       displayIndex(index) {
