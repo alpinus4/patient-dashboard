@@ -40,7 +40,7 @@
           </div>
           <div class="modal-body">
             <form action="javascript:NewSearchQueryInModal()" id="searchFormInModal">
-              Patient name: <input type="text" id="searchBarInputInModal" class="form-control">
+              Patient name: <input type="text" id="searchBarInputInModal" class="form-control" autocomplete="off">
               <button type="submit" class="btn btn-default btn-lg" id="submitBtnInModal"><span class="glyphicon glyphicon-search"></span></button></br>
 
               <patient-search id="searchResults"/>
@@ -69,7 +69,7 @@
     <div id="contentContainer" class="container">
       <form action="javascript:NewSearchQuery()" id="searchForm">
         <div id="searchBar">
-          <input type="text" class="form-control input-lg" id="searchBarInput">
+          <input type="text" class="form-control input-lg" id="searchBarInput" autocomplete="off">
         </div>
       </form>
       <div class="row">

@@ -68,7 +68,11 @@
     <!-- shadow DOM goes here -->
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
-          <div class="type">{{item.resource.category.text}} </div>
+          <div class="type">{{item.resource.category.text}}
+            <template is="dom-if" if="{{!item.resource.category.text}}">
+              Observation without category
+            </template>
+          </div>
           <template is="dom-if" if="{{item.resource.issued}}">
             <div class="date">Date: {{parseDate(item.resource.issued)}}</div>
           </template>
