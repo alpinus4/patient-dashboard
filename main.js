@@ -4,6 +4,7 @@ var activePatientBtn, theSameBtn, currentPage;
 function ClickedItem(patientBtn) {
   putIDToComponents(patientBtn.id);
   $("#searchResultsModal").modal("hide");
+  document.getElementById('searchBarInput').value = document.getElementById('searchBarInputInModal').value;
 }
 
 function putIDToComponents(patientid) {
@@ -41,7 +42,6 @@ function NewSearchQuery() {
 }
 
 function NewSearchQueryInModal() {
-  console.log("asd");
   newsq = document.getElementById("searchBarInputInModal").value;
   if (activePatientBtn) {
     activePatientBtn.classList.remove("active");
