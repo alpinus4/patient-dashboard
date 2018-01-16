@@ -46,7 +46,7 @@
       </ul>
     </template>
 
-  <iron-ajax url="http://ontoserver.csiro.au/stu3-latest/Patient" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
+  <iron-ajax url="https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
 
   </template>
 

@@ -35,8 +35,13 @@
       :host .observationParameter{
         font-size: var(--observation-charts-font-size-code , inherit);
         color: var(--observation-charts-font-color-code , rgb(255, 255, 255));
-        width: 50%;
-        text-align: left;
+        padding-left: 5%;
+        height: auto;
+      }
+
+      :host .date{
+        font-size: var(--observation-charts-font-size-code , 17pt);
+        color: var(--observation-charts-font-color-code , rgba(255, 255, 255, 0.87));
         padding-left: 5%;
         height: auto;
       }
@@ -48,9 +53,28 @@
     <!-- shadow DOM goes here -->
     <div id="content">
       <template is="dom-repeat" items="[[toShow]]">
-          <div class="type">{{item.resource.category.0.coding.0.display}} </div></br>
-          <span class="observationParameter">{{item.resource.code.text}} {{item.resource.code.coding.0.display}}:</span>
-          <span class="observationValue">{{item.resource.valueQuantity.value}}  {{item.resource.valueQuantity.unit}}</span></br></br>
+          <div class="type">{{item.resource.category.text}} </div>
+          <template is="dom-if" if="{{item.resource.issued}}">
+            <div class="date">Date: {{parseDate(item.resource.issued)}}</div>
+          </template>
+          </br>
+          <span class="observationParameter">
+            <template is="dom-if" if="{{item.resource.code.text}}">
+              {{item.resource.code.text}}
+            </template>
+            <template is="dom-if" if="{{!item.resource.code.text}}">
+              {{item.resource.code.coding.0.display}}
+            </template>:
+            </span>
+          <span class="observationValue">
+          <template is="dom-if" if="{{item.resource.valueQuantity}}">
+            {{item.resource.valueQuantity.value}}  {{item.resource.valueQuantity.unit}}</br>
+          </template>
+          <template is="dom-if" if="{{item.resource.valueCodeableConcept}}">
+            {{item.resource.valueCodeableConcept.text}}</br>
+          </template>
+          </span>
+        </br></br>
       </template>
     </div>
 
@@ -95,14 +119,26 @@
         var observations = data.detail.response.entry;
         if(observations){
           this.toShow = observations;
-          console.log(observations);
         }else{
           __notFound(this.$.content);
         }
       }
 
+      parseDate(givenDate){
+        //External function not working in this case
+
+        var date = new Date(givenDate);
+        //part of code from https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date with added hours and minutes
+        var myDateString;
+        date.setDate(date.getDate() + 0);
+        myDateString = ('0' + date.getDate()).slice(-2) + '/' +
+          ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+          date.getFullYear();
+        return myDateString;
+      }
+
       _changedPatientID(){
-        this.url = "https://syntheticmass.mitre.org/fhir/Observation?patient=" + this.patientid;
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Observation?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 

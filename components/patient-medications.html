@@ -57,11 +57,17 @@
         <p>
           <div class="title">
             <span class="index"><b>{{displayIndex(index)}}.</b></span>
-            <span class="medication" id="medication">{{item.resource.medicationCodeableConcept.coding.0.display}}</span></br>
+            <span class="medication" id="medication">
+              <template is="dom-if" if="{{item.resource.medicationCodeableConcept.text}}">
+                {{item.resource.medicationCodeableConcept.text}}
+              </template>
+              <template is="dom-if" if="{{!item.resource.medicationCodeableConcept.text}}">
+                {{item.resource.contained.0.code.text}}
+              </template>
+            </span></br>
           </div>
-          <!--<span class="dosageInstruction">Dosage: {{item.resource.dosageInstruction.0._text.extension.0.valueString}}</br></span>-->
+          <span class="dosageInstruction">Dosage: {{item.resource.dosageInstruction.0._text.extension.0.valueString}}</br></span>
           <span class="status">Status: {{item.resource.status}}</br></span>
-          <span class="handedOver">Handed over: {{item.resource.whenHandedOver}}</br></span>
         </p>
       </template>
     </div>
@@ -117,7 +123,7 @@
       }
 
       _changedPatientID(){
-        this.url = "https://syntheticmass.mitre.org/fhir/MedicationDispense?patient=" + this.patientid;
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/MedicationOrder?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 
@@ -126,6 +132,7 @@
       }
 
       _error(event) {
+        console.log("ERROR  - " + event.detail.error.message);
         __ironAjaxError(event);
       }
 

@@ -188,7 +188,7 @@
       }
 
       _changedPatientID() {
-        this.url = "https://syntheticmass.mitre.org/fhir/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
+        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
       }
 
