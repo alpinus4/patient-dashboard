@@ -22,6 +22,10 @@ function putIDToComponents(patientid) {
   '<conditions-problems patientid="'+patientid+'" id="problemsComponent" />';
 }
 
+$('document').ready(function(){
+  $("#searchResultsModal").modal();
+});
+
 
 
 function NewSearchQuery() {

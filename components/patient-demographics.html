@@ -39,9 +39,25 @@
         color: var(--patient-demographics-font-color-birthdate-title, inherit);
       }
 
+      /*LOADING SPINNER*/
+      .loader {
+        border: 6px solid #cb7a0a;
+        border-radius: 50%;
+        border-top: 6px solid #ffffff;
+        width: 20px;
+        height: 20px;
+        margin: auto;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(1080deg); }
+      }
+
     </style>
 
-
+<template is="dom-if" if="{{patient}}">
   <div id=content>
     <div id="name">
       <template is="dom-repeat" items="[[patient.name.0.given]]">
@@ -58,6 +74,11 @@
     {{patient.birthDate}}
   </div>
   </div>
+</template>
+
+<template is="dom-if" if="{{loading}}">
+  <div class="loader"></div>
+</template>
 
   <iron-ajax url="{{url}}"
   headers='{"Accept": "application/json+fhir"}'
@@ -67,8 +88,6 @@
   method="GET"
   on-error="_error"
   id="iron_ajax"/>
-
-
   </template>
 
   <script>
@@ -80,6 +99,9 @@
         return {
           patient: {
             type: Object
+          },
+          loading: {
+            type: Boolean
           },
           uuid: {
             type: String,
@@ -106,7 +128,8 @@
           tmp_patient.gender = "-";
         }
 
-        this.patient = tmp_patient
+        this.patient = tmp_patient;
+        this.loading = false;
 
         if(this.patient.birthDate){
           this.age = __calculateAge(this.patient.birthDate);
@@ -122,6 +145,8 @@
       _changedUUID() {
         this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient" + this.uuid;
         this.$.iron_ajax.generateRequest();
+        this.loading = true;
+        this.patient = null;
       }
 
     }
