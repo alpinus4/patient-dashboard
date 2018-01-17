@@ -67,14 +67,25 @@
                   <label class="checkbox-bootstrap checkbox-lg">
                       <input type="checkbox" id="allowResizingCheckbox">
                       <span class="checkbox-placeholder"></span>
-                      Allow saving data about tab sizes and restoring it in the next browser session
+                      Save data about tab sizes and restore it in the next browser session
                   </label>
                 </div>
+              </br>
+              <div class="checkbox">
+                <label class="checkbox-bootstrap checkbox-lg">
+                    <input type="checkbox" id="storeLastPhraseCheckbox">
+                    <span class="checkbox-placeholder"></span>
+                    Store the last searched phrase and restore it in the next browser session
+                </label>
+              </div>
               </br></br></br>
-                <button type="button" class="btn btn-default btn-lg" onclick="ClearSavedTabsSettings" id="clearSavedTabsSettingsBtn">
-                  Remove all saved tab sizes <i class="fas fa-trash-alt"></i>
+                <button type="button" class="btn btn-default btn-lg" onclick="ClearSavedTabsSettings()" id="clearSavedTabsSettingsBtn">
+                  Reset all tabs to default position and remove all saved tab sizes <i class="fas fa-trash-alt"></i>
+                </button></br></br>
+                <button type="button" class="btn btn-default btn-lg" onclick="ClearSavedPhrase()" id="clearSavedPhraseBtn">
+                  Remove last saved phrase <i class="fas fa-trash-alt"></i>
                 </button>
-              </br></br>
+              </br></br></br>
                 <button type="submit" class="btn btn-default btn-lg" id="saveSettingsBtn">
                   Save <i class="far fa-save"></i>
                 </button></br>

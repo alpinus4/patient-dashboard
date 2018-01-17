@@ -13,6 +13,8 @@ body {
   background-color: #F1F0F1;
   position: absolute;
   min-width: calc(100% - 50px);
+  max-width: calc(100% - 50px);
+  width: calc(100% - 50px);
 }
 
 .orange-background {
@@ -121,7 +123,8 @@ body {
 }
 
 #activeLists {
-  height: 390px;
+  width: 450px;
+  height: 715px;
 }
 
 #observationCharts {
@@ -141,6 +144,7 @@ body {
 
 #medications {
   height: 300px;
+  width: 360px;
 }
 
 #enrolledPrograms {
@@ -149,6 +153,7 @@ body {
 
 #nextAppointments {
   height: 300px;
+  width: 340px;
 }
 
 #problems h1, #lastVisits h1 {
