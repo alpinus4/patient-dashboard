@@ -12,3 +12,5 @@ git clone https://github.com/alpinus4/patient-dashboard
 2. #### Run `polymer serve --open` command in project location (you must have installed polymer)
 
 3. #### Enjoy...
+
+4. If you want to see all components together in action, search for _joe_ and choose _JOE SMART_
