@@ -12,14 +12,12 @@
         color: var(--conditions-problems-font-color , rgb(24, 24, 24));
         background-color: var(--conditions-problems-background-color , inherit);
         padding: var(--conditions-problems-padding , 10px);
-
       }
 
       /*INDEX*/
       :host .index {
         font-size: var(--conditions-problems-font-size-index , inherit);
         color: var(--conditions-problems-font-color-index , inherit);
-        display: var(--conditions-problems-display-index , inherit);
       }
 
 
@@ -27,7 +25,6 @@
       :host .category {
         font-size: var(--conditions-problems-font-size-category , inherit);
         color: var(--conditions-problems-font-color-category , inherit);
-        display: var(--conditions-problems-display-category , inherit);
       }
 
 
@@ -35,29 +32,31 @@
       :host .problemDiagnosis {
         font-size: var(--conditions-problems-font-size-problem-diagnosis , inherit);
         color: var(--conditions-problems-font-color-problem-diagnosis , inherit);
-        display: var(--conditions-problems-display-problem-diagnosis , inherit);
       }
 
       /*VERIFICATION STATUS*/
       :host .verificationStatus {
         font-size: var(--conditions-problems-font-size-verification-status , inherit);
         color: var(--conditions-problems-font-color-verification-status , inherit);
-        display: var(--conditions-problems-display-verification-status , inherit);
       }
 
       /*CLINICAL STATUS*/
       :host .clinicalStatus {
         font-size: var(--conditions-problems-font-size-clinical-status , inherit);
         color: var(--conditions-problems-font-color-clinical-status , inherit);
-        display: var(--conditions-problems-display-clinical-status , inherit);
+      }
+
+      /*RESOLVED*/
+      :host .resolved {
+        font-size: var(--conditions-problems-font-size-resolved , inherit);
+        color: var(--conditions-problems-font-color-resolved , inherit);
       }
 
 
       /*DATE*/
       :host .date {
-        font-size: var(--conditions-problems-font-size-onset , 15pt);
-        color: var(--conditions-problems-font-color-onset , rgb(88, 88, 88));
-        display: var(--conditions-problems-display-onset , inherit);
+        font-size: var(--conditions-problems-font-size-date , 15pt);
+        color: var(--conditions-problems-font-color-date , rgb(88, 88, 88));
       }
 
       /*TITLE [INDEX, TYPE]*/
