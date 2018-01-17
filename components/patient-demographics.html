@@ -80,6 +80,10 @@
   <div class="loader"></div>
 </template>
 
+<template is="dom-if" if="{{error}}">
+  {{errorMessage}}
+</template>
+
   <iron-ajax url="{{url}}"
   headers='{"Accept": "application/json+fhir"}'
   content-type="application/json"
@@ -103,6 +107,12 @@
           loading: {
             type: Boolean
           },
+          error: {
+            type: Boolean
+          },
+          errorMessage: {
+            type: String
+          },
           uuid: {
             type: String,
             observer: "_changedUUID"
@@ -112,6 +122,9 @@
           },
           age: {
             type: Number
+          },
+          fhirUrl: {
+            type: String
           }
         }
       }
@@ -121,6 +134,7 @@
 
       handleResponse(data) {
         var tmp_patient = data.detail.response;
+        console.log(tmp_patient);
 
         if(tmp_patient.gender){
           tmp_patient.gender = __capitalizeFirstLetter(tmp_patient.gender);
@@ -139,12 +153,16 @@
       }
 
       _error(event) {
+        this.error = true;
+        this.loading = false;
+        this.errorMessage = event.detail.error.message;
         __ironAjaxError(event);
       }
 
       _changedUUID() {
-        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient" + this.uuid;
+        this.url = this.fhirUrl+"/Patient/" + this.uuid;
         this.$.iron_ajax.generateRequest();
+        this.error = false;
         this.loading = true;
         this.patient = null;
       }

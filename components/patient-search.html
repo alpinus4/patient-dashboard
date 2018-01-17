@@ -37,7 +37,7 @@
       <div class="loader"></div>
     </template>
 
-    <!-- <template is="dom-if" if="{{!loading}}"> -->
+    <template is="dom-if" if="{{!loading}}">
       <ul class="list-group">
         <template is="dom-repeat" items="[[patient]]" id="results">
           <a class="list-group-item" href="#" onclick="ClickedItem(this);" id="{{item.resource.id}}">{{item.resource.name.0.given.0}}
@@ -47,9 +47,9 @@
           <li class="list-group-item" id="notFound">No matching patients found.</li>
         </template>
       </ul>
-    <!-- </template> -->
+    </template>
 
-  <iron-ajax url="https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Patient" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
+  <iron-ajax url="" params='{{sqObj}}' content-type="application/json" handle-as="json" headers='{"Accept": "application/json+fhir"}' on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax"></iron-ajax>
 
   </template>
 
@@ -76,6 +76,9 @@
           },
           notFound: {
             type: Boolean
+          },
+          fhirUrl: {
+            type: String
           }
         }
       }
@@ -109,6 +112,7 @@
         this.sqObj = {
           given: this.sq
         }
+        this.$.iron_ajax.url = this.fhirUrl+"/Patient";
         this.$.iron_ajax.generateRequest();
         this.loading = true;
         this.patient = [];

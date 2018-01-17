@@ -21,25 +21,25 @@ var newsq = "";
 var activePatientBtn, theSameBtn, currentPage;
 
 function ClickedItem(patientBtn) {
-  putIDToComponents(patientBtn.id);
+  putIDAndURLToComponents(patientBtn.id);
   $("#searchResultsModal").modal("hide");
   document.getElementById('searchBarInput').value = document.getElementById('searchBarInputInModal').value;
 }
 
-function putIDToComponents(patientid) {
+function putIDAndURLToComponents(patientid) {
   console.log("CURRENT PATIENT ID: "+patientid);
   document.getElementById("patientDemographicsComponentContainer").innerHTML =
-  '<patient-demographics uuid="'+patientid+'" id="patientDemographicsComponent" />';
+  '<patient-demographics uuid="'+patientid+'" id="patientDemographicsComponent" fhir-url="'+Cookies.get('URL_to_rest')+'" />';
   document.getElementById("nextAppointmentsComponentContainer").innerHTML =
-  '<next-appointments patientid="'+patientid+'" id="nextAppointmentsComponent" />';
+  '<next-appointments patientid="'+patientid+'" id="nextAppointmentsComponent" fhir-url="'+Cookies.get('URL_to_rest')+'" />';
   document.getElementById("patientMedicationsComponentContainer").innerHTML =
-  '<patient-medications patientid="'+patientid+'" id="patientMedicationsComponent" />';
+  '<patient-medications patientid="'+patientid+'" id="patientMedicationsComponent" fhir-url="'+Cookies.get('URL_to_rest')+'" />';
   document.getElementById("observationChartsComponentContainer").innerHTML =
-  '<observation-charts patientid="'+patientid+'" id="observationChartsComponent" />';
+  '<observation-charts patientid="'+patientid+'" id="observationChartsComponent" fhir-url="'+Cookies.get('URL_to_rest')+'" />';
   document.getElementById("lastVisitsComponentContainer").innerHTML =
-  '<last-visits patientid="'+patientid+'" id="lastVisitsComponent" />';
+  '<last-visits patientid="'+patientid+'" id="lastVisitsComponent" fhir-url="'+Cookies.get('URL_to_rest')+'" />';
   document.getElementById("problemsComponentContainer").innerHTML =
-  '<conditions-problems patientid="'+patientid+'" id="problemsComponent" />';
+  '<conditions-problems patientid="'+patientid+'" id="problemsComponent" fhir-url="'+Cookies.get('URL_to_rest')+'"/>';
 }
 
 $('document').ready(function(){
@@ -52,7 +52,13 @@ $('document').ready(function(){
       RestoreSavedTabSizes();
       Tabs();
     }
+    SetSearchingUrl();
 });
+
+function SetSearchingUrl(){
+  document.getElementById("searchComponentContainer").innerHTML =
+  '<patient-search id="searchResults" fhir-url="'+Cookies.get('URL_to_rest')+'"/>';
+}
 
 
 
@@ -93,6 +99,11 @@ function RestoreLastPhrase(){
 
 function ClearSavedPhrase(){
   Cookies.set('lastPhrase', "", { expires: 7 });
+}
+
+function ResetFhirUrl(){
+  Cookies.set('URL_to_rest', "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca", { expires: 7 });
+  SetSettingsInModal();
 }
 
 
@@ -165,12 +176,19 @@ function SetSettingsInModal(){
     $("#storeLastPhraseCheckbox").prop('checked', true);
     Cookies.set('allowSavingLastPhrase', true, { expires: 7 });
   }
+
+  if(Cookies.get('URL_to_rest')){
+    $("#urlToFhirRest").val(Cookies.get('URL_to_rest'));
+  }else{
+    Cookies.set('URL_to_rest', "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca", { expires: 7 });
+  }
 }
 
 function SaveSettings(){
   Cookies.set('allowSavingResizing', $('#allowResizingCheckbox').is(":checked"), { expires: 7 });
   Cookies.set('allowSavingLastPhrase', $('#storeLastPhraseCheckbox').is(":checked"), { expires: 7 });
-  console.log(Cookies.get('allowSavingResizing'));
+  Cookies.set('URL_to_rest', $("#urlToFhirRest").val(), { expires: 7 });
+  SetSearchingUrl();
   if(!$('#allowResizingCheckbox').is(":checked")){
     ClearSavedTabsSettings();
   }else{
@@ -207,5 +225,8 @@ function SetRequiredCookies (){
   }
   if(!Cookies.get('allowSavingLastPhrase')){
     Cookies.set('allowSavingLastPhrase', true, { expires: 7 });
+  }
+  if(!Cookies.get('URL_to_rest')){
+    Cookies.set('URL_to_rest', "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca", { expires: 7 });
   }
 }

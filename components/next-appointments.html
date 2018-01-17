@@ -141,11 +141,20 @@
 
     <!-- shadow DOM goes here -->
     <div id="content">
-      <div id="caleandar"/>
+      <template is="dom-if" if="{{!notFound}}">
+        <div id="caleandar"/>
+      </template>
+      <template is="dom-if" if="{{notFound}}">
+        Not found.
+      </template>
     </div>
 
     <template is="dom-if" if="{{loading}}">
       <div class="loader"></div>
+    </template>
+
+    <template is="dom-if" if="{{error}}">
+      {{errorMessage}}
     </template>
 
   <iron-ajax url="{{url}}" headers='{"Accept": "application/json+fhir"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax" />
@@ -165,11 +174,23 @@
           loading: {
             type: Boolean
           },
+          error: {
+            type: Boolean
+          },
+          errorMessage: {
+            type: String
+          },
+          notFound: {
+            type: Boolean
+          },
           patientid: {
             type: String,
             observer: "_changedPatientID"
           },
           url: {
+            type: String
+          },
+          fhirUrl: {
             type: String
           }
         }
@@ -184,14 +205,16 @@
         var nextAppointments = data.detail.response.entry;
         if (nextAppointments) {
           runCalendar(this.$.caleandar, nextAppointments);
+          this.notFound = false;
         } else {
-          __notFound(this.$.content);
+          this.notFound = true;
         }
         this.loading = false;
       }
 
       _changedPatientID() {
-        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
+        this.url = this.fhirUrl+"/Appointment?date=ge2017&date=le2019&patient=" + this.patientid;
+        this.error = false;
         this.$.iron_ajax.generateRequest();
         this.toShow = [];
         this.loading = true;
@@ -202,6 +225,9 @@
       }
 
       _error(event) {
+        this.error = true;
+        this.loading = false;
+        this.errorMessage = event.detail.error.message;
         __ironAjaxError(event);
       }
 

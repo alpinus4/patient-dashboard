@@ -85,6 +85,10 @@
     <div class="loader"></div>
   </template>
 
+  <template is="dom-if" if="{{error}}">
+    {{errorMessage}}
+  </template>
+
   <iron-ajax url="{{url}}" headers='{"Accept": "application/json+fhir"}' content-type="application/json" handle-as="json" on-response="handleResponse" method="GET" on-error="_error" id="iron_ajax" />
 
   </template>
@@ -99,6 +103,12 @@
           toShow: {
             type: Array
           },
+          error: {
+            type: Boolean
+          },
+          errorMessage: {
+            type: String
+          },
           patientid: {
             type: String,
             observer: "_changedPatientID"
@@ -107,6 +117,9 @@
             type: Boolean
           },
           url: {
+            type: String
+          },
+          fhirUrl: {
             type: String
           }
         }
@@ -131,7 +144,7 @@
 
           this.toShow = encounters;
         } else {
-          __notFound(this.$.content);
+          this.$.content.innerHTML = "Not found.";
         }
 
         this.loading = false;
@@ -153,9 +166,10 @@
       }
 
       _changedPatientID() {
-        this.url = "https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca/Encounter?patient=" + this.patientid;
+        this.url = this.fhirUrl+"/Encounter?patient=" + this.patientid;
         this.$.iron_ajax.generateRequest();
         this.toShow = [];
+        this.error = false;
         this.loading = true;
       }
 
@@ -164,6 +178,9 @@
       }
 
       _error(event) {
+        this.error = true;
+        this.loading = false;
+        this.errorMessage = event.detail.error.message;
         __ironAjaxError(event);
       }
 

@@ -46,7 +46,9 @@
               Patient name: <input type="text" id="searchBarInputInModal" class="form-control" autocomplete="off">
               <button type="submit" class="btn btn-default btn-lg" id="submitBtnInModal"><span class="glyphicon glyphicon-search"></span></button></br>
 
-              <patient-search id="searchResults"/>
+              <span id="searchComponentContainer">
+                <patient-search id="searchResults"/>
+              </span>
             </form>
           </div>
         </div>
@@ -77,8 +79,13 @@
                     <span class="checkbox-placeholder"></span>
                     Store the last searched phrase and restore it in the next browser session
                 </label>
-              </div>
+              </div></br>
+              <label for="searchBarInputInModal">URL to FHIR (with DSTU2) REST Endpoint</label>
+              <input type="text" id="urlToFhirRest" class="form-control">
               </br></br></br>
+                <button type="button" class="btn btn-default btn-lg" onclick="ResetFhirUrl()" id="resetUrlBtn">
+                  Reset URL to FHIR REST Endpoint <i class="fas fa-retweet"></i>
+                </button></br></br>
                 <button type="button" class="btn btn-default btn-lg" onclick="ClearSavedTabsSettings()" id="clearSavedTabsSettingsBtn">
                   Reset all tabs to default position and remove all saved tab sizes <i class="fas fa-trash-alt"></i>
                 </button></br></br>

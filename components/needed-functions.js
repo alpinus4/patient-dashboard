@@ -41,10 +41,6 @@ function __capitalizeFirstLetter(string) {
 }
 
 
-function __notFound(container){
-  container.innerHTML = "Not found.";
-}
-
 function __ironAjaxError(event){
   console.log(event);
   console.log(event.detail);
