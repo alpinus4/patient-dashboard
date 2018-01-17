@@ -3,6 +3,8 @@ Designed by @shauryanathan</br>
 Connected with this GCI task: https://gitlab.com/librehealth/gci/issues/121</br>
 Tested on Firefox 57.0.4 and Chrome 63.0.3239.132.
 
+My components are connected with this server: https://fhir-open.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca
+
 # How to run?
 
 1. #### Clone it via Git
