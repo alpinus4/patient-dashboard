@@ -15,7 +15,7 @@ git clone https://github.com/alpinus4/patient-dashboard
 
 3. #### Enjoy...
 
-![](images/screenshot.png?raw=true "Title")
+![](images/screenshot.png?raw=true "Screenshot")
 
 
 4. If you want to see all components together in action, search for _joe_ and choose _JOE SMART_
