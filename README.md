@@ -18,4 +18,8 @@ git clone https://github.com/alpinus4/patient-dashboard
 ![](images/screenshot.png?raw=true "Screenshot")
 
 
-4. If you want to see all components together in action, search for _joe_ and choose _JOE SMART_
+4. #### If you want to see all components together in action, search for _joe_ and choose _JOE SMART_
+
+5. #### In settings you can change server url and many other things.
+
+![](images/screenshot-settings.png?raw=true "Screenshot")
